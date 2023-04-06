@@ -33,7 +33,8 @@ public class ChasePlayer : MonoBehaviour
     private void Chase()
     {
         transform.position = Vector2.MoveTowards(transform.position,player.transform.position,speed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, player.transform.position) <= 0.5f) ; // shoot
+        if (Vector2.Distance(transform.position, player.transform.position) <= 0.5f)
+            KnightStatic.instance.TakeDame(-10); // shoot
         else
         {
             // reset variables;

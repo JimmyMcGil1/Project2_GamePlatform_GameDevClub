@@ -34,7 +34,7 @@ public class FireballShot : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
-            // other.gameObject.GetComponenet<playerHealth>().health -= 20; 
+            KnightStatic.instance.TakeDame(-20);
         }
     }
 }

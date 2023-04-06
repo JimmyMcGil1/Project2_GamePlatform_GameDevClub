@@ -293,6 +293,7 @@ MonoBehaviour:
   pointA: {fileID: 1560842926}
   pointB: {fileID: 1434859179}
   speed: 3
+  player: {fileID: 0}
 --- !u!1 &1305833909
 GameObject:
   m_ObjectHideFlags: 0

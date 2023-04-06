@@ -9,11 +9,13 @@ public class PatrolScript : MonoBehaviour
     private Rigidbody2D rb;
     private Transform currentPoint;
     public float speed;
+    public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         currentPoint = pointB.transform;
+        player = GameObject.FindGameObjectWithTag("Player");
 
     }
 
@@ -39,6 +41,8 @@ public class PatrolScript : MonoBehaviour
             currentPoint = pointB.transform;
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
+        if (Vector2.Distance(transform.position, player.transform.position) <= 0.5f)
+            KnightStatic.instance.TakeDame(-10); // shoot
     }
     private void OnDrawGizmos()
     {
