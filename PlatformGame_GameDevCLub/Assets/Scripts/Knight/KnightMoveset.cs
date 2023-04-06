@@ -9,15 +9,35 @@ public class KnightMoveset : MonoBehaviour
     public float speed;
     float hor;
     Vector2 faceDir;
+   
+    [Header("Rolling")]
+    [SerializeField] float rollForce;
+    bool rolling;
+    float rollTimmer;
+    float rollCounter;
+
+    [Header("Jump")]
     public float powerJump;
     Vector2 pos;
     bool jump;
     bool onWall;
+
+    [Header("Crouching")]
+    [SerializeField] Vector2 newSize;
+    [SerializeField] Vector2 newOffset;
+    bool crouch;
+    Vector2 oldSize;
+    Vector2 oldOffset;
+    
     Rigidbody2D rigit;
     BoxCollider2D box;
     Animator anim;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask wallLayer;
+    float initialGravity;
+    [SerializeField] float powerJumpOnWall;
+    [SerializeField] float smoothScale;
+
 
     private void Awake()
     {
@@ -28,19 +48,41 @@ public class KnightMoveset : MonoBehaviour
         anim = GetComponent<Animator>();
         faceDir = transform.localScale;
         onWall = false;
+        initialGravity = rigit.gravityScale;
+        rolling = true;
+        rollTimmer = 0.5f;
+        rollCounter = 0f;
+        oldOffset = box.offset;
+        oldSize = box.size;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Moving
         hor = Input.GetAxisRaw("Horizontal");
-        anim.SetBool("run", hor != 0 && IsGround());
+        anim.SetBool("run", hor != 0 && IsGround() && !crouch);
+       
+        //Jumping
         if (Input.GetKeyDown(KeyCode.Space)) jump = true;
-     /*   if (OnWall())
+        if (Input.GetKeyDown(KeyCode.Space) && onWall)
         {
-            onWall = true;
-        } 
-    */
+            JumpingOnWall(powerJumpOnWall);
+        }
+        anim.SetBool("wall_hang", onWall);
+        
+        //Rolling
+        if (Input.GetKeyDown(KeyCode.C) && IsGround())
+        {
+            if (rollCounter < rollTimmer) rollCounter += Time.deltaTime;
+            else
+            {
+                rolling = true;
+                anim.SetTrigger("roll");
+                rollCounter = 0;
+            }
+        }
+        rollCounter += Time.deltaTime;
     }
     private void FixedUpdate()
     {
@@ -64,36 +106,74 @@ public class KnightMoveset : MonoBehaviour
             anim.SetTrigger("jump");
 
         }
-    /*    if (onWall)
+        
+        if (rolling)
         {
-            Debug.Log("onwall");
-            rigit.AddForce(Vector2.right * transform.localScale.x * 5f);
-            anim.SetTrigger("onWall");
-
-            rigit.velocity = Vector2.zero;
-            rigit.gravityScale = 0;
-            if (Input.GetKeyDown(KeyCode.Space)) JumpingOnWall();
-            onWall = false;
+            rigit.AddForce(new Vector2(rollForce * 1 * faceDir.x, 0), ForceMode2D.Impulse);
+            rolling = !rolling;
+        }
+        //Crouching
+        if (Input.GetKey(KeyCode.S))
+        {
+            Crouching();
+            crouch = true;
         }
         else
         {
-            rigit.gravityScale = 6;
+            crouch = false;
+            box.size = oldSize;
+            box.offset = oldOffset;
         }
-    */
+        anim.SetBool("crouch", crouch && hor == 0);
+        anim.SetBool("crouch_run", crouch && hor != 0);
     }
     public bool IsGround()
     {
+        rigit.gravityScale = initialGravity;
         Debug.Log("isground");
         RaycastHit2D hit = Physics2D.BoxCast(box.bounds.center, box.bounds.size, 0, Vector2.down, 0.01f, groundLayer);
         return hit.collider != null;
     }
-    bool OnWall()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        RaycastHit2D hitWall = Physics2D.Raycast(transform.position, Vector2.right * transform.localScale.x, 0.05f);
-        return (hitWall.collider != null && hitWall.collider.CompareTag("Wall"));
+        if (collision.gameObject.CompareTag("Wall") && !IsGround())
+        {
+            
+            onWall = true;
+            float dir = collision.gameObject.transform.position.x - transform.position.x;
+            if (faceDir.x * dir < 0) faceDir.x = -faceDir.x;
+        }
     }
-    void JumpingOnWall()
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        rigit.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * powerJump * 20, powerJump * 30 * Mathf.Sin(60 * Mathf.Deg2Rad)));
+        if (onWall)
+        {
+            rigit.velocity = Vector2.zero;
+            rigit.gravityScale = 0.4f;
+        }
+        else return;
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (onWall)
+        {
+            rigit.gravityScale = initialGravity;
+            onWall = !onWall;
+        }
+      
+    }
+    void JumpingOnWall(float powerJump)
+    {
+        Vector2 newPos;
+        newPos.x = (powerJump ) *   Mathf.Cos(60 * Mathf.Deg2Rad) *  (-Mathf.Sign(faceDir.x));
+        newPos.y = (powerJump + 10 ) *   Mathf.Sin(60 * Mathf.Deg2Rad) ;
+        rigit.AddForce(newPos , ForceMode2D.Impulse);
+        onWall = !onWall;
+
+    }
+    void Crouching()
+    {
+        box.size = newSize;
+        box.offset = newOffset;
     }
 }
