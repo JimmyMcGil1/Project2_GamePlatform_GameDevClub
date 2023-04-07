@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class KnightStatic : MonoBehaviour, IDataPersistence
 {
-    int currHeal;
-    int currEXP;
-    int currLevel;
-    int maxEXP;
+    public int currHeal;
+    public int currEXP;
+    public int currLevel;
+    public int maxEXP;
     [SerializeField] Slider slider_heal;
     [SerializeField] Slider slider_exp;
     [SerializeField] Text heal_text;
