@@ -2,41 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnightMoveset : MonoBehaviour
+public class KnightMoveset : MonoBehaviour, IDataPersistence
 {
     public static KnightMoveset instance { get; private set; }
     [Header("Move")]
     public float speed;
     float hor;
     Vector2 faceDir;
-    Vector2 pos;
-    bool isCrouching;
-
-    [Header("Crouch")]
-    [SerializeField] float ySize;
-    [SerializeField] float yOffset;
-    Vector2 oldSize;
-    Vector2 oldOff;
-
+   
     [Header("Rolling")]
-    [SerializeField] float rollTimmer;
+    [SerializeField] float rollForce;
+    bool rolling;
+    float rollTimmer;
     float rollCounter;
-    bool isRoll;
 
-    [SerializeField] float powerWallJump;
+    [Header("Jump")]
     public float powerJump;
+    Vector2 pos;
     bool jump;
     bool onWall;
+
+    [Header("Crouching")]
+    [SerializeField] Vector2 newSize;
+    [SerializeField] Vector2 newOffset;
+    bool crouch;
+    Vector2 oldSize;
+    Vector2 oldOffset;
+    
     Rigidbody2D rigit;
     BoxCollider2D box;
     Animator anim;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask wallLayer;
-    [SerializeField] float smoothness;
-
     float initialGravity;
+    [SerializeField] float powerJumpOnWall;
+    [SerializeField] float smoothScale;
 
-    GameObject Dust;
+    GameObject dust;
+
+
     private void Awake()
     {
         if (this != null && this != instance) instance = this;
@@ -46,55 +50,58 @@ public class KnightMoveset : MonoBehaviour
         anim = GetComponent<Animator>();
         faceDir = transform.localScale;
         onWall = false;
-        oldOff = box.offset;
-        oldSize = box.size;
-        isRoll = false;
-        rollCounter = 0;
-        rollTimmer = 1f;
-
         initialGravity = rigit.gravityScale;
-        Dust = GameObject.FindGameObjectWithTag("Dust");
+        rolling = true;
+        rollTimmer = 0.5f;
+        rollCounter = 0f;
+        oldOffset = box.offset;
+        oldSize = box.size;
+        dust = GameObject.FindGameObjectWithTag("Dust");
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Moving
         hor = Input.GetAxisRaw("Horizontal");
-        anim.SetBool("run", hor != 0 && IsGround() && !isCrouching  && !CheckSmallCollider());
+        anim.SetBool("run", hor != 0 && IsGround() );
+       
+        //Jumping
         if (Input.GetKeyDown(KeyCode.Space)) jump = true;
-        if (Input.GetKey(KeyCode.Space) && onWall) JumpingOnWall(powerWallJump);
-
+        if (Input.GetKeyDown(KeyCode.Space) && onWall)
+        {
+            JumpingOnWall(powerJumpOnWall);
+        }
+        anim.SetBool("wall_hang", onWall);
+        
+        //Rolling
+        if (Input.GetKeyDown(KeyCode.C) && IsGround())
+        {
+            if (rollCounter < rollTimmer) rollCounter += Time.deltaTime;
+            else
+            {
+                rolling = true;
+                anim.SetTrigger("roll");
+                rollCounter = 0;
+            }
+        }
+        rollCounter += Time.deltaTime;
 
         //Crouching
-        if (Input.GetKey(KeyCode.S) )
+        if ((Input.GetKey(KeyCode.S) || (Input.GetKeyDown(KeyCode.S)) ) && Mathf.Approximately(hor, 0f))
         {
-            
-            Small_Collider();
-            isCrouching = true;
-            
+            if (Input.GetKeyDown(KeyCode.S))
+                rigit.AddForce(Vector2.down * 4, ForceMode2D.Impulse);
+              Crouching();
+              crouch = true;
         }
         else
         {
-            isCrouching = false;
+            crouch = false;
             box.size = oldSize;
-            box.offset = oldOff;
+            box.offset = oldOffset;
         }
-        
-        anim.SetBool("run_crouch", !Mathf.Approximately(hor, 0) && isCrouching || CheckSmallCollider() && !Mathf.Approximately(hor, 0));
-        anim.SetBool("isCrouch", isCrouching || CheckSmallCollider() );
-        ///////////////
-
-        //Roll 
-        rollCounter += Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.C) && IsGround())
-        {
-            if (rollCounter >=  rollTimmer) 
-            {
-                isRoll = true;
-                anim.SetTrigger("roll");
-            }
-        }
-
+        anim.SetBool("crouch", crouch && hor == 0);
     }
     private void FixedUpdate()
     {
@@ -113,85 +120,84 @@ public class KnightMoveset : MonoBehaviour
         //Jumping
         if (jump && IsGround())
         {
+            
             rigit.AddForce(Vector2.up * powerJump, ForceMode2D.Impulse);
             jump = false;
             anim.SetTrigger("jump");
 
         }
-        //Roll
-        if (isRoll)
+        
+        if (rolling)
         {
-            rigit.AddForce(faceDir * 7, ForceMode2D.Impulse);
-            isRoll = !isRoll;
-            rollCounter = 0;
+            rigit.AddForce(new Vector2(rollForce * 1 * faceDir.x, 0), ForceMode2D.Impulse);
+            rolling = !rolling;
         }
+
+        if (crouch)
+        {
+        }
+        
     }
     public bool IsGround()
     {
         rigit.gravityScale = initialGravity;
-        RaycastHit2D hit = Physics2D.BoxCast(box.bounds.center, box.bounds.size, 0, Vector2.down, 0.05f, groundLayer);
+        Debug.Log("isground");
+        RaycastHit2D hit = Physics2D.BoxCast(box.bounds.center, box.bounds.size, 0, Vector2.down, 0.01f, groundLayer);
         return hit.collider != null;
     }
-    #region JumpOnWall
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall") && !IsGround())
         {
+            
             onWall = true;
-            Vector2 dir = collision.gameObject.transform.position - gameObject.transform.position;
-            dir = dir.normalized;
-            if (dir.x * faceDir.x < 0) faceDir.x = -faceDir.x;
-            Debug.Log("wall");
+            float dir = collision.gameObject.transform.position.x - transform.position.x;
+            if (faceDir.x * dir < 0) faceDir.x = -faceDir.x;
         }
-        if (collision.collider.CompareTag("Ground"))
+        else if (collision.gameObject.CompareTag("Ground"))
         {
-            Dust.GetComponent<Animator>().SetTrigger("_dust");
+            dust.GetComponent<Animator>().SetTrigger("_dust");
         }
+
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (onWall)
         {
-            Debug.Log("onwall");
-            //    rigit.AddForce(Vector2.right * transform.localScale.x * 5f);
-            anim.SetBool("wall_hang", true);
             rigit.velocity = Vector2.zero;
-            rigit.gravityScale = 0.2f;
+            rigit.gravityScale = 0.4f;
         }
-       
+        else return;
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-
-        if (collision.gameObject.CompareTag("Wall"))
+        if (onWall)
         {
             rigit.gravityScale = initialGravity;
-            anim.SetBool("wall_hang", false);
-            onWall = false;
+            onWall = !onWall;
         }
+      
     }
-    #endregion
+    void JumpingOnWall(float powerJump)
+    {
+        Vector2 newPos;
+        newPos.x = (powerJump ) *   Mathf.Cos(60 * Mathf.Deg2Rad) *  (-Mathf.Sign(faceDir.x));
+        newPos.y = (powerJump + 10 ) *   Mathf.Sin(60 * Mathf.Deg2Rad) ;
+        rigit.AddForce(newPos , ForceMode2D.Impulse);
+        onWall = !onWall;
 
-    void JumpingOnWall(float v)
-    {
-        Vector2 newVelocity;
-        newVelocity.x = (v + 5) * Mathf.Cos(70 * Mathf.Deg2Rad) * (-Mathf.Sign(faceDir.x));
-        newVelocity.y = v * Mathf.Sin(70 * Mathf.Deg2Rad) - rigit.gravityScale * 1;
-        rigit.velocity = newVelocity;
     }
-    
-    void Small_Collider()
+    void Crouching()
     {
-        box.size = new Vector2(box.size.x, ySize);
-        box.offset = new Vector2(box.offset.x, yOffset);
+        box.size = newSize;
+        box.offset = newOffset;
     }
-        
-    bool CheckSmallCollider()
+    public void LoadData(GameData gameData)
     {
-        RaycastHit2D hit = Physics2D.BoxCast(box.bounds.center, box.bounds.size, 0, Vector2.up, 0.1f, wallLayer);
-        if (hit.collider != null) Small_Collider();
-        return hit.collider != null;
+        transform.position = gameData.playerPos;
     }
-
-   
+    public void SaveData(ref GameData gameData)
+    {
+        gameData.playerPos = transform.position;
+    }
 }

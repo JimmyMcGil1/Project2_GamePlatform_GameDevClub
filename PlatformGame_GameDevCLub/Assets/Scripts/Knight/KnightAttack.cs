@@ -13,12 +13,14 @@ public class KnightAttack : MonoBehaviour
     [SerializeField] float attackTimmer;
     [SerializeField] float attackTimmerNo2;
     float attackCoolDown;
+    GameObject swordEffect;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         attackCoolDown = Mathf.Infinity;
         box = GetComponent<BoxCollider2D>();
+        swordEffect = GameObject.FindGameObjectWithTag("SwordEffect");
     }
     private void Update()
     {
@@ -26,13 +28,10 @@ public class KnightAttack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
 
-
             if (attackCoolDown > attackTimmer)
             {
                 anim.SetTrigger("attack");
-
-
-
+                swordEffect.GetComponent<Animator>().SetTrigger("effect2");
                 if (Input.GetKeyDown(KeyCode.Mouse0) && attackCoolDown < attackTimmerNo2 && KnightMoveset.instance.IsGround())
                 {
                     anim.SetTrigger("attack2");

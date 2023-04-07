@@ -8,17 +8,18 @@ TagManager:
   - Dust
   - Ground
   - Knight
+  - SwordEffect
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - HP
   - Water
   - UI
   - Ground
   - Wall
-  - 
-  - 
+  - Blood
+  - Trap
   - 
   - 
   - 
