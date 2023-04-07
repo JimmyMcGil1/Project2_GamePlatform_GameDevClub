@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnightMoveset : MonoBehaviour
+public class KnightMoveset : MonoBehaviour, IDataPersistence
 {
     public static KnightMoveset instance { get; private set; }
     [Header("Move")]
@@ -38,6 +38,8 @@ public class KnightMoveset : MonoBehaviour
     [SerializeField] float powerJumpOnWall;
     [SerializeField] float smoothScale;
 
+    GameObject dust;
+
 
     private void Awake()
     {
@@ -54,6 +56,7 @@ public class KnightMoveset : MonoBehaviour
         rollCounter = 0f;
         oldOffset = box.offset;
         oldSize = box.size;
+        dust = GameObject.FindGameObjectWithTag("Dust");
     }
 
     // Update is called once per frame
@@ -61,7 +64,7 @@ public class KnightMoveset : MonoBehaviour
     {
         //Moving
         hor = Input.GetAxisRaw("Horizontal");
-        anim.SetBool("run", hor != 0 && IsGround() && !crouch);
+        anim.SetBool("run", hor != 0 && IsGround() );
        
         //Jumping
         if (Input.GetKeyDown(KeyCode.Space)) jump = true;
@@ -83,6 +86,22 @@ public class KnightMoveset : MonoBehaviour
             }
         }
         rollCounter += Time.deltaTime;
+
+        //Crouching
+        if ((Input.GetKey(KeyCode.S) || (Input.GetKeyDown(KeyCode.S)) ) && Mathf.Approximately(hor, 0f))
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+                rigit.AddForce(Vector2.down * 4, ForceMode2D.Impulse);
+              Crouching();
+              crouch = true;
+        }
+        else
+        {
+            crouch = false;
+            box.size = oldSize;
+            box.offset = oldOffset;
+        }
+        anim.SetBool("crouch", crouch && hor == 0);
     }
     private void FixedUpdate()
     {
@@ -101,6 +120,7 @@ public class KnightMoveset : MonoBehaviour
         //Jumping
         if (jump && IsGround())
         {
+            
             rigit.AddForce(Vector2.up * powerJump, ForceMode2D.Impulse);
             jump = false;
             anim.SetTrigger("jump");
@@ -112,20 +132,11 @@ public class KnightMoveset : MonoBehaviour
             rigit.AddForce(new Vector2(rollForce * 1 * faceDir.x, 0), ForceMode2D.Impulse);
             rolling = !rolling;
         }
-        //Crouching
-        if (Input.GetKey(KeyCode.S))
+
+        if (crouch)
         {
-            Crouching();
-            crouch = true;
         }
-        else
-        {
-            crouch = false;
-            box.size = oldSize;
-            box.offset = oldOffset;
-        }
-        anim.SetBool("crouch", crouch && hor == 0);
-        anim.SetBool("crouch_run", crouch && hor != 0);
+        
     }
     public bool IsGround()
     {
@@ -143,6 +154,11 @@ public class KnightMoveset : MonoBehaviour
             float dir = collision.gameObject.transform.position.x - transform.position.x;
             if (faceDir.x * dir < 0) faceDir.x = -faceDir.x;
         }
+        else if (collision.gameObject.CompareTag("Ground"))
+        {
+            dust.GetComponent<Animator>().SetTrigger("_dust");
+        }
+
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -175,5 +191,13 @@ public class KnightMoveset : MonoBehaviour
     {
         box.size = newSize;
         box.offset = newOffset;
+    }
+    public void LoadData(GameData gameData)
+    {
+        transform.position = gameData.playerPos;
+    }
+    public void SaveData(ref GameData gameData)
+    {
+        gameData.playerPos = transform.position;
     }
 }

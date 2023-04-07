@@ -8,6 +8,7 @@ TagManager:
   - Dust
   - Ground
   - Knight
+  - SwordEffect
   layers:
   - Default
   - TransparentFX
