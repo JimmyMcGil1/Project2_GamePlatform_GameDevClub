@@ -141,7 +141,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
     public bool IsGround()
     {
         rigit.gravityScale = initialGravity;
-        Debug.Log("isground");
+       // Debug.Log("isground");
         RaycastHit2D hit = Physics2D.BoxCast(box.bounds.center, box.bounds.size, 0, Vector2.down, 0.01f, groundLayer);
         return hit.collider != null;
     }

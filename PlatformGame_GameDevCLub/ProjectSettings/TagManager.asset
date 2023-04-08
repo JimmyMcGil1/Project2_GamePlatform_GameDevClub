@@ -9,6 +9,8 @@ TagManager:
   - Ground
   - Knight
   - SwordEffect
+  - Enemy
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -18,8 +20,8 @@ TagManager:
   - UI
   - Ground
   - Wall
-  - 
-  - 
+  - Knight
+  - Enemy
   - 
   - 
   - 

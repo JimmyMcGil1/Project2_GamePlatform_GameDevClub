@@ -224,7 +224,7 @@ TextureImporter:
         width: 16
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -232,6 +232,27 @@ TextureImporter:
       bones: []
       spriteID: 9a478594405a266408eba56c450ef090
       internalID: -1521058323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_2x_sliced_4
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 50
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5acb7494460138b489fb191f60fe7608
+      internalID: -1397205629
       vertices: []
       indices: 
       edges: []
@@ -248,6 +269,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       GUI_2x_sliced_0: -359926451
+      GUI_2x_sliced_4: 124588153
       GUI_2x_sliced_1: 1641542222
       GUI_2x_sliced_3: -1521058323
       GUI_2x_sliced_2: 2128765956

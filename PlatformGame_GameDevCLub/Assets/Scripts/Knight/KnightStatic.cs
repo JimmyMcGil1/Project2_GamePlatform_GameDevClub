@@ -54,7 +54,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E)) TakeDame(-10);
-        if (Input.GetKeyDown(KeyCode.F)) HealChange(10);
+        if (Input.GetKeyDown(KeyCode.F)) GainHp(10);
         if (Input.GetKeyDown(KeyCode.R)) GainEXP(10);
       
     }
@@ -65,12 +65,20 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     public void TakeDame(int dame)
     {
         HealChange(dame);
-        anim.SetTrigger("hit");
+      //  anim.SetTrigger("hit");
         rigit.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * 4, 0), ForceMode2D.Impulse);
         if (currHeal == 0)
         {
             anim.SetTrigger("dead");
         }
+    }
+    /// <summary>
+    /// Knight duoc hoi mot luong HP. Luu y bonusHp phai lon hon 0
+    /// </summary>
+    public void GainHp(int bonusHp)
+    {
+        HealChange(bonusHp);
+        anim.SetTrigger("heal");
     }
     private void LevelUp()
     {
