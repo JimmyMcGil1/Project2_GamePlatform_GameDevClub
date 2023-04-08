@@ -8,7 +8,7 @@ public class ChaseControl : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Knight"))
         {
             foreach (ChasePlayer enemy in enemyArray)
             {
@@ -18,7 +18,7 @@ public class ChaseControl : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Knight"))
         {
             foreach (ChasePlayer enemy in enemyArray)
             {
