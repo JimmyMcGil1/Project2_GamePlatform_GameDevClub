@@ -9,19 +9,17 @@ TagManager:
   - Ground
   - Knight
   - SwordEffect
-  - Enemy
-  - Boss
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - HP
   - Water
   - UI
   - Ground
   - Wall
-  - Knight
-  - Enemy
+  - Blood
+  - Trap
   - 
   - 
   - 
