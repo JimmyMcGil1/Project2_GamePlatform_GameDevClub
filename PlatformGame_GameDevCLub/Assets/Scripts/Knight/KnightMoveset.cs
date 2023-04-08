@@ -37,6 +37,8 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
     float initialGravity;
     [SerializeField] float powerJumpOnWall;
     [SerializeField] float smoothScale;
+    [SerializeField] private AudioSource jumpingSoundEffect;
+    [SerializeField] private AudioSource rollingSoundEffect;
 
     GameObject dust;
 
@@ -83,6 +85,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
                 rolling = true;
                 anim.SetTrigger("roll");
                 rollCounter = 0;
+                rollingSoundEffect.Play();
             }
         }
         rollCounter += Time.deltaTime;
@@ -124,6 +127,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
             rigit.AddForce(Vector2.up * powerJump, ForceMode2D.Impulse);
             jump = false;
             anim.SetTrigger("jump");
+            jumpingSoundEffect.Play();
 
         }
         

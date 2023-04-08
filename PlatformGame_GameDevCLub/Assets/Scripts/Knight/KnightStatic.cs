@@ -14,6 +14,8 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     [SerializeField] Text heal_text;
     [SerializeField] Text exp_text;
     [SerializeField] Text level_text;
+    [SerializeField] AudioSource hurtSoundEffect;
+    [SerializeField] AudioSource deathSoundEffect;
     int maxHeal;
     public static KnightStatic instance { get; private set; }
     Animator anim;
@@ -64,12 +66,14 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     /// <param name="dame"></param>
     public void TakeDame(int dame)
     {
+        hurtSoundEffect.Play();
         HealChange(dame);
         anim.SetTrigger("hit");
         rigit.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * 4, 0), ForceMode2D.Impulse);
         if (currHeal == 0)
         {
             anim.SetTrigger("dead");
+            deathSoundEffect.Play();
         }
     }
     private void LevelUp()

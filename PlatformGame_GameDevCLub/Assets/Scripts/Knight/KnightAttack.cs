@@ -12,6 +12,7 @@ public class KnightAttack : MonoBehaviour
     [SerializeField] float range;
     [SerializeField] float attackTimmer;
     [SerializeField] float attackTimmerNo2;
+    [SerializeField] AudioSource AttackSoundEffect;
     float attackCoolDown;
     GameObject swordEffect;
 
@@ -27,7 +28,7 @@ public class KnightAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-
+            AttackSoundEffect.Play();
             if (attackCoolDown > attackTimmer)
             {
                 anim.SetTrigger("attack");
