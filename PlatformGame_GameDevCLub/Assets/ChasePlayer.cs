@@ -12,7 +12,7 @@ public class ChasePlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Knight");
     }
 
     // Update is called once per frame
@@ -33,12 +33,6 @@ public class ChasePlayer : MonoBehaviour
     private void Chase()
     {
         transform.position = Vector2.MoveTowards(transform.position,player.transform.position,speed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, player.transform.position) <= 0.5f)
-            KnightStatic.instance.TakeDame(-10); // shoot
-        else
-        {
-            // reset variables;
-        }
     }
     private void Flip()
     {
@@ -47,4 +41,11 @@ public class ChasePlayer : MonoBehaviour
         else
             transform.rotation = Quaternion.Euler(0, 0, 0);
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Knight")
+        {
+            KnightStatic.instance.TakeDame(-10);
         }
+    }
+}

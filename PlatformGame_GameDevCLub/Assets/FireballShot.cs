@@ -13,7 +13,7 @@ public class FireballShot : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Knight");
 
         Vector3 direction = player.transform.position - transform.position;
         rb.velocity = new Vector2(direction.x, direction.y).normalized * force;
@@ -31,10 +31,10 @@ public class FireballShot : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Knight"))
         {
             Destroy(gameObject);
-            KnightStatic.instance.TakeDame(-20);
+            other.gameObject.GetComponent<KnightStatic>().TakeDame(-20);
         }
     }
 }

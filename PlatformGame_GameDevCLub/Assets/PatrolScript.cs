@@ -15,7 +15,7 @@ public class PatrolScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         currentPoint = pointB.transform;
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Knight");
 
     }
 
@@ -41,14 +41,18 @@ public class PatrolScript : MonoBehaviour
             currentPoint = pointB.transform;
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        if (Vector2.Distance(transform.position, player.transform.position) <= 0.5f)
-            KnightStatic.instance.TakeDame(-10); // shoot
     }
-    private void OnDrawGizmos()
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(pointA.transform.position, 0.5f);
+            Gizmos.DrawWireSphere(pointB.transform.position, 0.5f);
+            Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
+        }
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Gizmos.DrawWireSphere(pointA.transform.position, 0.5f);
-        Gizmos.DrawWireSphere(pointB.transform.position, 0.5f);
-        Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
+        if (collision.gameObject.tag == "Knight")
+        {
+            KnightStatic.instance.TakeDame(-10);
+        }
     }
 }
-
