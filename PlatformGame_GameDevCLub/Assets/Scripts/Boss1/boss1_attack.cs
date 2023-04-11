@@ -34,6 +34,7 @@ public class boss1_attack : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
+        if (!Application.isPlaying) return;
         Gizmos.color = Color.magenta;
           Gizmos.DrawWireSphere((Vector2)box.bounds.center + realRange, range);
     }

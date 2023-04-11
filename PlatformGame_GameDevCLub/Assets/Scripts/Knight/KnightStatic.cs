@@ -33,7 +33,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         anim = GetComponent<Animator>();
         rigit = GetComponent<Rigidbody2D>();
     }
-   
+    
     void HealChange(int healChange)
     {
         if (healChange < 0)
@@ -56,6 +56,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         if (Input.GetKeyDown(KeyCode.E)) TakeDame(-10);
         if (Input.GetKeyDown(KeyCode.F)) GainHp(10);
         if (Input.GetKeyDown(KeyCode.R)) GainEXP(10);
+        if (Input.GetKeyDown(KeyCode.Escape)) UI_In_Level_test.instance.GamePause(); 
       
     }
     /// <summary>
@@ -111,6 +112,15 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         gameData.EXP = currEXP;
         gameData.Level = currLevel;
         gameData.HP = currHeal;
+    }
+    /// <summary>
+    /// Is call by event in 'dead' animation
+    /// </summary>
+    void Dead()
+    {
+        GameManager.instance.GameOver();
+        UI_In_Level_test.instance.GamePause();
+        currEXP = 0;
     }
     
 }
