@@ -77,13 +77,16 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         //Rolling
         if (Input.GetKeyDown(KeyCode.C) && IsGround())
         {
-            if (rollCounter < rollTimmer) rollCounter += Time.deltaTime;
-            else
+            if (rollCounter > rollTimmer)
             {
                 rolling = true;
+                Crouching();
                 anim.SetTrigger("roll");
                 rollCounter = 0;
             }
+            box.size = oldSize;
+            box.offset = oldOffset;
+
         }
         rollCounter += Time.deltaTime;
 
@@ -181,7 +184,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
     void JumpingOnWall(float powerJump)
     {
         Vector2 newPos;
-        newPos.x = (powerJump ) *   Mathf.Cos(60 * Mathf.Deg2Rad) *  (-Mathf.Sign(faceDir.x));
+        newPos.x = (powerJump  ) *   Mathf.Cos(60 * Mathf.Deg2Rad) *  (-Mathf.Sign(faceDir.x));
         newPos.y = (powerJump + 10 ) *   Mathf.Sin(60 * Mathf.Deg2Rad) ;
         rigit.AddForce(newPos , ForceMode2D.Impulse);
         onWall = !onWall;

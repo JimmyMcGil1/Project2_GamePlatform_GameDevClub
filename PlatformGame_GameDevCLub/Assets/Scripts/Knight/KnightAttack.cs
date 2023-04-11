@@ -14,10 +14,14 @@ public class KnightAttack : MonoBehaviour
     [SerializeField] float attackTimmerNo2;
     float attackCoolDown;
 
-    [SerializeField] float attackTimmerNo3;
     Rigidbody2D rigit;
     GameObject swordEffect;
     Vector2 realRange;
+    [SerializeField] int flashDistance;
+    [SerializeField] float flashTimmer;
+    [SerializeField] int attackDamage;
+     float flashCounter;
+    KnightMoveset knight; 
 
     private void Awake()
     {
@@ -25,6 +29,8 @@ public class KnightAttack : MonoBehaviour
         attackCoolDown = 0f;
         box = GetComponent<BoxCollider2D>();
         swordEffect = GameObject.FindGameObjectWithTag("SwordEffect");
+        knight = GetComponent<KnightMoveset>();
+        flashCounter = 0;
     }
     private void Update()
     {
@@ -42,8 +48,16 @@ public class KnightAttack : MonoBehaviour
              attackCoolDown = 0;
             }
         }
-     
-       
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (flashCounter > flashTimmer) 
+            {
+                anim.SetTrigger("flash");
+                flashCounter = 0;
+            }
+        }
+
+        flashCounter += Time.deltaTime;
         attackCoolDown += Time.deltaTime;
         realRange = colliderRange;
         realRange.x *= Mathf.Sign(transform.localScale.x);
@@ -60,11 +74,17 @@ public class KnightAttack : MonoBehaviour
         {
             if (hit[i].gameObject.CompareTag("Boss"))
             {
-                hit[i].gameObject.GetComponent<Boss1_static>().TakeDame(-50);
-                hit[i].gameObject.GetComponent<Animator>().SetTrigger("hurt");
+                hit[i].gameObject.GetComponent<Boss1_static>().TakeDame(-attackDamage);
+                //hit[i].gameObject.GetComponent<Animator>().SetTrigger("hurt");
             }
                 
         }
 
+    }
+    void Flash()
+    {
+        Vector2 newPos = transform.position;
+        newPos.x = newPos.x + flashDistance * Mathf.Sign(transform.localScale.x);
+        transform.position = newPos;
     }
 }

@@ -28,7 +28,8 @@ public class Boss1_static : MonoBehaviour
     public void TakeDame(int dame)
     {
         currHeal = (currHeal + dame < 0) ? 0 : currHeal + dame;
-        rigit.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * 0.1f, 0), ForceMode2D.Force);
+        if (currHeal == 0) anim.SetTrigger("death");
+        else anim.SetTrigger("hurt");
         slider_heal.value = currHeal;
         heal_text.text = $"{currHeal}/{maxHeal}";
         if (currHeal < maxHeal * 0.95f)
@@ -38,5 +39,9 @@ public class Boss1_static : MonoBehaviour
             anim.SetBool("run_state_2", true);
         }
 
+    }
+    void Death()
+    {
+        Destroy(gameObject);
     }
 }
