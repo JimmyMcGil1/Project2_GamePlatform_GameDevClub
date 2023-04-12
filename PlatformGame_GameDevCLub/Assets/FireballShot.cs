@@ -26,7 +26,7 @@ public class FireballShot : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 10)
+        if (timer > 3)
             Destroy(gameObject);
     }
     void OnTriggerEnter2D(Collider2D other)

@@ -24,7 +24,7 @@ public class CheckpointScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Knight"))
         {
             respawn.RespawnPoint = this.gameObject;
             checkpointCollider.enabled = false;
