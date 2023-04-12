@@ -35,7 +35,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         anim = GetComponent<Animator>();
         rigit = GetComponent<Rigidbody2D>();
     }
-   
+    
     void HealChange(int healChange)
     {
         if (healChange < 0)
@@ -56,8 +56,9 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E)) TakeDame(-10);
-        if (Input.GetKeyDown(KeyCode.F)) HealChange(10);
+        if (Input.GetKeyDown(KeyCode.F)) GainHp(10);
         if (Input.GetKeyDown(KeyCode.R)) GainEXP(10);
+        if (Input.GetKeyDown(KeyCode.Escape)) UI_In_Level_test.instance.GamePause(); 
       
     }
     /// <summary>
@@ -68,13 +69,21 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     {
         hurtSoundEffect.Play();
         HealChange(dame);
-        anim.SetTrigger("hit");
+      //  anim.SetTrigger("hit");
         rigit.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * 4, 0), ForceMode2D.Impulse);
         if (currHeal == 0)
         {
             anim.SetTrigger("dead");
             deathSoundEffect.Play();
         }
+    }
+    /// <summary>
+    /// Knight duoc hoi mot luong HP. Luu y bonusHp phai lon hon 0
+    /// </summary>
+    public void GainHp(int bonusHp)
+    {
+        HealChange(bonusHp);
+        anim.SetTrigger("heal");
     }
     private void LevelUp()
     {
@@ -107,6 +116,15 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         gameData.EXP = currEXP;
         gameData.Level = currLevel;
         gameData.HP = currHeal;
+    }
+    /// <summary>
+    /// Is call by event in 'dead' animation
+    /// </summary>
+    void Dead()
+    {
+        GameManager.instance.GameOver();
+        UI_In_Level_test.instance.GamePause();
+        currEXP = 0;
     }
     
 }
