@@ -39,7 +39,7 @@ public class KnightAttack : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            AttackSoundEffect.Play();
+          //  AttackSoundEffect.Play();
             if (attackCoolDown > attackTimmer)
             {
                 anim.SetTrigger("attack");

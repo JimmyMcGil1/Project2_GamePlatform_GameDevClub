@@ -22,7 +22,10 @@ public class UI_static_present : MonoBehaviour
     {
         UpdateStatic();
     }
-    
+    private void Update()
+    {
+        UpdateStatic();
+    }
     public static void UpdateStatic()
     {
         attack_text.text = KnightStatic.instance.attackPower.ToString();

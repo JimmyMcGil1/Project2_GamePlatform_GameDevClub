@@ -13,7 +13,7 @@ public class Plus : KnightStatic
         Collider2D[] HPs = Physics2D.OverlapCircleAll(transform.position, l, HP);
         foreach(var HP in HPs)
         {
-            KnightStatic.instance.GainHP(10);
+            KnightStatic.instance.GainHp(10);
             Destroy(HP.gameObject);
         } 
     }
@@ -23,7 +23,7 @@ public class Plus : KnightStatic
         Collider2D[] Bloods = Physics2D.OverlapCircleAll(transform.position, l, Blood);
         foreach(var Blood in Bloods)
         {
-            KnightStatic.instance.(5);
+            KnightStatic.instance.GainEXP(5);
             Destroy(Blood.gameObject);
         } 
     }

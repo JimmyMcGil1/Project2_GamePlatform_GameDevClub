@@ -135,7 +135,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
             rigit.AddForce(Vector2.up * powerJump, ForceMode2D.Impulse);
             jump = false;
             anim.SetTrigger("jump");
-            jumpingSoundEffect.Play();
+          //  jumpingSoundEffect.Play();
 
         }
         
