@@ -10,6 +10,7 @@ public class EnemyShooting : MonoBehaviour
     public float spawnRate;
     public float realDistance;
     private GameObject player;
+    [SerializeField] AudioSource fireballSoundEffect;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,5 +38,6 @@ public class EnemyShooting : MonoBehaviour
     void shoot()
     {
         Instantiate(fireball, fireballPos.position, Quaternion.identity);
+        fireballSoundEffect.Play();
     }
 }
