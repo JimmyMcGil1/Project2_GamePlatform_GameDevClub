@@ -63202,6 +63202,10 @@ PrefabInstance:
       propertyPath: currHeal
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7812157108847141209, guid: 7b7f1e9990c80a240b8080735566b8c2, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b7f1e9990c80a240b8080735566b8c2, type: 3}
 --- !u!1 &1870315586
