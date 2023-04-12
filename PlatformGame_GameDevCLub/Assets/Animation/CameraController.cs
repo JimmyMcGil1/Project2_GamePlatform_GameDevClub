@@ -26,6 +26,6 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
-      
+        xOffset = (player.localScale.x > 0) ? 2 : -2;
     }
 }
