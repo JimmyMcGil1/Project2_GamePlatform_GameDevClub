@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 1985092018}
   - component: {fileID: 1985092017}
   - component: {fileID: 1985092023}
+  - component: {fileID: 1985092024}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -289,13 +290,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  rollForce: 0
   powerJump: 12
+  newSize: {x: 0, y: 0}
+  newOffset: {x: 0, y: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   wallLayer:
     serializedVersion: 2
     m_Bits: 0
+  powerJumpOnWall: 0
+  smoothScale: 0
 --- !u!95 &1985092020
 Animator:
   serializedVersion: 5
@@ -395,13 +401,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e46c7bfc46e973d4e839904fdaeb6fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemLayer:
+  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   colliderRange: {x: 0, y: 0}
   range: 0
   attackTimmer: 0.2
   attackTimmerNo2: 0.4
+  flashDistance: 0
+  flashTimmer: 0
+  attackDamage: 0
+--- !u!114 &1985092024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985092016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b53ffd15e79b49e4982bdca91cfe85a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP:
+    serializedVersion: 2
+    m_Bits: 8
+  Blood:
+    serializedVersion: 2
+    m_Bits: 256
+  l: 0
 --- !u!1 &2045701242
 GameObject:
   m_ObjectHideFlags: 0
