@@ -14,8 +14,8 @@ public class Boss1_static : MonoBehaviour
     Rigidbody2D rigit;
     private void Awake()
     {
-        if (instance == null) instance = new Boss1_static();
-        else if (this != instance) instance = this;
+        if (instance != null && instance != this) Destroy(this);
+        else instance = this;
 
         currHeal = maxHeal;
         slider_heal.maxValue = maxHeal;

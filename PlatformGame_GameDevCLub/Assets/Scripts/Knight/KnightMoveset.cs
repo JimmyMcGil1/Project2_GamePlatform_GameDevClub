@@ -6,7 +6,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
 {
     public static KnightMoveset instance { get; private set; }
     [Header("Move")]
-    public float speed;
+    float speed;
     float hor;
     Vector2 faceDir;
    
@@ -57,12 +57,17 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         oldOffset = box.offset;
         oldSize = box.size;
         dust = GameObject.FindGameObjectWithTag("Dust");
+        //Set the init static of knigt
     }
-
+    private void Start()
+    {
+        this.speed = KnightStatic.instance.speed;
+    }
     // Update is called once per frame
     void Update()
     {
         //Moving
+        this.speed = KnightStatic.instance.speed;
         hor = Input.GetAxisRaw("Horizontal");
         anim.SetBool("run", hor != 0 && IsGround() );
        

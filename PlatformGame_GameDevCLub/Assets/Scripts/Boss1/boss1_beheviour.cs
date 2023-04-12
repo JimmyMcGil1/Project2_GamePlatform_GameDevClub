@@ -23,7 +23,7 @@ public class boss1_beheviour : MonoBehaviour
         StartCoroutine(StartRun());
         StartCoroutine(StartSummon());
     }
-   
+  
     IEnumerator StartRun()
     {
         for (int i = 0; i < 1; i++)

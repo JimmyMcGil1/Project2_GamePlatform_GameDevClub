@@ -9,6 +9,12 @@ TagManager:
   - Ground
   - Knight
   - SwordEffect
+  - Boss
+  - Boss2
+  - Spell
+  - UI_static_present
+  - UI_LevelUp
+  - UI_knight_static
   layers:
   - Default
   - TransparentFX
@@ -20,8 +26,8 @@ TagManager:
   - Wall
   - Blood
   - Trap
-  - 
-  - 
+  - Enemy
+  - Knight
   - 
   - 
   - 

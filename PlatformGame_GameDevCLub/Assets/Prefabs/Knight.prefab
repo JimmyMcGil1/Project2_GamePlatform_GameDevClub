@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2145498199494511789}
   - component: {fileID: 2145498199494511787}
   - component: {fileID: 1282020033}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Knight
   m_TagString: Knight
   m_Icon: {fileID: 0}
@@ -125,7 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5c14ea5e7bf5b48b454a560fb1716c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
   rollForce: 7
   powerJump: 20
   newSize: {x: 0.6105828, y: 1.2}
@@ -199,11 +198,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   colliderRange: {x: 0.5, y: 0.2}
   range: 0.55
   attackTimmer: 0.4
   attackTimmerNo2: 0.6
+  flashDistance: 3
+  flashTimmer: 1
 --- !u!114 &1282020033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +217,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22397486bfba97f49bed52b5b59aa808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currHeal: 100
+  currEXP: 0
+  currLevel: 0
+  maxEXP: 100
+  attackPower: 0
+  strength: 0
+  speed: 0
   slider_heal: {fileID: 0}
   slider_exp: {fileID: 0}
   heal_text: {fileID: 0}
