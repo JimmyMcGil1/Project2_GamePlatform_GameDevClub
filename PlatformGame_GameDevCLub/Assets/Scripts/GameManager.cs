@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
+      //  DontDestroyOnLoad(gameObject);
     }
     public void StartGame()
     {

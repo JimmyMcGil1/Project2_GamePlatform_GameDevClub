@@ -20,9 +20,8 @@ public class KnightAttack : MonoBehaviour
     Vector2 realRange;
     [SerializeField] int flashDistance;
     [SerializeField] float flashTimmer;
-    [SerializeField] int attackDamage;
      float flashCounter;
-    KnightMoveset knight; 
+    int attackPower;
 
     private void Awake()
     {
@@ -30,14 +29,17 @@ public class KnightAttack : MonoBehaviour
         attackCoolDown = 0f;
         box = GetComponent<BoxCollider2D>();
         swordEffect = GameObject.FindGameObjectWithTag("SwordEffect");
-        knight = GetComponent<KnightMoveset>();
         flashCounter = 0;
+    }
+    private void Start()
+    {
+        attackPower = KnightStatic.instance.attackPower;
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            AttackSoundEffect.Play();
+          //  AttackSoundEffect.Play();
             if (attackCoolDown > attackTimmer)
             {
                 anim.SetTrigger("attack");
@@ -49,7 +51,7 @@ public class KnightAttack : MonoBehaviour
              attackCoolDown = 0;
             }
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && (KnightStatic.instance.canFlash == 1))
         {
             if (flashCounter > flashTimmer) 
             {
@@ -76,10 +78,14 @@ public class KnightAttack : MonoBehaviour
         {
             if (hit[i].gameObject.CompareTag("Boss"))
             {
-                hit[i].gameObject.GetComponent<Boss1_static>().TakeDame(-attackDamage);
+                hit[i].gameObject.GetComponent<Boss1_static>().TakeDame(-attackPower);
                 //hit[i].gameObject.GetComponent<Animator>().SetTrigger("hurt");
             }
-                
+            if (hit[i].gameObject.CompareTag("Boss2"))
+            {
+                hit[i].gameObject.GetComponent<Boss2_static>().TakeDame(-attackPower);
+               // hit[i].gameObject.GetComponent<Animator>().SetTrigger("hurt");
+            }
         }
 
     }

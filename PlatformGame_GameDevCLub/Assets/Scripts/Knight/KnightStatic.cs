@@ -5,37 +5,49 @@ using UnityEngine.UI;
 
 public class KnightStatic : MonoBehaviour, IDataPersistence
 {
+
     public int currHeal;
     public int currEXP;
     public int currLevel;
+
     public int maxEXP;
-    [SerializeField] Slider slider_heal;
-    [SerializeField] Slider slider_exp;
-    [SerializeField] Text heal_text;
-    [SerializeField] Text exp_text;
-    [SerializeField] Text level_text;
-    [SerializeField] AudioSource hurtSoundEffect;
-    [SerializeField] AudioSource deathSoundEffect;
-    int maxHeal;
+    public int maxHeal = 100;
+    public int attackPower;
+    public int strength;
+    public int speed;
+    public int canFlash;
+    GameObject UI_kngit_static;
+    Slider slider_heal;
+     Slider slider_exp;
+     Text heal_text;
+    Text exp_text;
+     Text level_text;
+    GameObject UI_static_present;
+    GameObject UI_LevelUp;
     public static KnightStatic instance { get; private set; }
     Animator anim;
     Rigidbody2D rigit;
+    bool firstLoad;
     private void Awake()
     {
+        if (instance != null && instance != this) Destroy(this);
+        else instance = this;
+        UI_kngit_static = GameObject.FindGameObjectWithTag("UI_knight_static");
+        slider_heal = UI_kngit_static.transform.Find("Heal_Slider").gameObject.GetComponent<Slider>();
+        slider_exp = UI_kngit_static.transform.Find("EXP_Slider").gameObject.GetComponent<Slider>();
+        heal_text = slider_heal.transform.Find("Heal").gameObject.GetComponent<Text>();
+        exp_text = slider_exp.transform.Find("EXP_Text").gameObject.GetComponent<Text>();
+        level_text = UI_kngit_static.transform.Find("Level_Text").GetComponent<Text>();
+        firstLoad = false;
         instance = this;
-        maxHeal = 100;
         maxEXP = 200;
-        slider_heal.maxValue = maxHeal;
-        slider_heal.value = currHeal;
-        slider_exp.maxValue = maxEXP;
-        slider_exp.value = currEXP;
-        heal_text.text = $"{currHeal}/{maxHeal}";
-        exp_text.text = $"{currEXP}/{maxEXP}";
-
         anim = GetComponent<Animator>();
         rigit = GetComponent<Rigidbody2D>();
+        UI_static_present = GameObject.FindGameObjectWithTag("UI_static_present");
+        UI_LevelUp = GameObject.FindGameObjectWithTag("UI_LevelUp");
+        Debug.Log($"Star max heal {maxHeal}");
     }
-    
+
     void HealChange(int healChange)
     {
         if (healChange < 0)
@@ -47,19 +59,18 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     }
     private void Start()
     {
-          slider_heal.value = currHeal;
-        heal_text.text = $"{currHeal}/{maxHeal}";
-        slider_exp.value = currEXP;
-        exp_text.text = $"{currEXP}/{maxEXP}";
-        level_text.text = $"Lv: {currLevel}";
+    
+        UI_static_present.SetActive(false);
+        UI_LevelUp.SetActive(false);
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)) TakeDame(-10);
-        if (Input.GetKeyDown(KeyCode.F)) GainHp(10);
-        if (Input.GetKeyDown(KeyCode.R)) GainEXP(10);
-        if (Input.GetKeyDown(KeyCode.Escape)) UI_In_Level_test.instance.GamePause(); 
-      
+        if (maxHeal != 0 && !firstLoad) UpdateState();
+        if (Input.GetKeyDown(KeyCode.F)) HealChange(10);
+        if (Input.GetKeyDown(KeyCode.X)) GainEXP(20);
+        if (Input.GetKey(KeyCode.T)) UI_static_present.SetActive(true);
+        else UI_static_present.SetActive(false);
+        // if (Input.GetKeyDown(KeyCode.Escape)) UI_In_Level_test.instance.GamePause(); 
     }
     /// <summary>
     /// Knight nhan vao luong sat thuong = dame. Luu y dame phai be hon 0
@@ -67,14 +78,12 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     /// <param name="dame"></param>
     public void TakeDame(int dame)
     {
-        hurtSoundEffect.Play();
-        HealChange(dame);
-      //  anim.SetTrigger("hit");
+        HealChange(dame + strength);
+        //  anim.SetTrigger("hit");
         rigit.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * 4, 0), ForceMode2D.Impulse);
         if (currHeal == 0)
         {
             anim.SetTrigger("dead");
-            deathSoundEffect.Play();
         }
     }
     /// <summary>
@@ -92,6 +101,12 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         exp_text.text = $"{currEXP}/{maxEXP}";
         level_text.text = $"Lv: {currLevel}";
         slider_exp.value = currEXP;
+        anim.SetTrigger("level_up");
+        maxHeal += Mathf.CeilToInt(maxHeal * 0.2f);
+        slider_heal.maxValue = maxHeal;
+        heal_text.text = $"{currHeal}/{maxHeal}";
+        if (currLevel >= 5) canFlash = 1;
+        UI_LevelUp.SetActive(true);
     }
     /// <summary>
     /// Nguoi choi duoc tang EXP. Luu y luong EXP tang phai lon hon 0 va be hon 200.
@@ -106,16 +121,30 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     }
     public void LoadData(GameData gameData)
     {
+        maxHeal = gameData.maxHp;
         currHeal = gameData.HP;
         currEXP = gameData.EXP;
         currLevel = gameData.Level;
+        attackPower = gameData.attackPower;
+        strength = gameData.strength;
+        speed = gameData.speed;
+
+        canFlash = gameData.canFlash;
         Debug.Log($"Load HP = {gameData.HP}");
+        Debug.Log($"Load attack  = {gameData.attackPower}");
+        Debug.Log($"Load strength = {gameData.strength}");
+        Debug.Log($"Load speed = {gameData.speed}");
     }
     public void SaveData(ref GameData gameData)
     {
+        gameData.maxHp = maxHeal;
         gameData.EXP = currEXP;
         gameData.Level = currLevel;
         gameData.HP = currHeal;
+        gameData.speed = speed;
+        gameData.attackPower = attackPower;
+        gameData.strength = strength;
+        gameData.canFlash = canFlash;
     }
     /// <summary>
     /// Is call by event in 'dead' animation
@@ -126,5 +155,19 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         UI_In_Level_test.instance.GamePause();
         currEXP = 0;
     }
-    
-}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Spell")) TakeDame(-10);
+    }
+    void UpdateState()
+    {
+        slider_heal.maxValue = maxHeal;
+        slider_heal.value = currHeal;
+        heal_text.text = $"{currHeal}/{maxHeal}";
+        slider_exp.maxValue = maxEXP;
+        slider_exp.value = currEXP;
+        exp_text.text = $"{currEXP}/{maxEXP}";
+        level_text.text = $"Lv: {currLevel}";
+        firstLoad = false;
+    }
+}   

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
-public class DataHandler: MonoBehaviour
+public class DataHandler : MonoBehaviour
 {
     private string dirPath = "";
     private string fileName = "";
