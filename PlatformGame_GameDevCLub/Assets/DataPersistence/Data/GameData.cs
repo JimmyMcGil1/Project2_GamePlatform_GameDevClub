@@ -12,6 +12,7 @@ public class GameData
     public int strength;
     public int speed;
     public int canFlash;
+    public int canShot;
     public Vector3 playerPos;
     public GameData()
     {
@@ -24,5 +25,6 @@ public class GameData
         strength = 5;
         playerPos = Vector3.zero;
         canFlash = 0;
+        canShot = 0;
     }
 }

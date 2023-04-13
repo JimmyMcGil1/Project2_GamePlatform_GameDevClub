@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Boss2_attack : MonoBehaviour
 {
     Transform knightPos;
-    BoxCollider2D box;
+    CapsuleCollider2D box;
     public static int no;
     Animator anim;
     float attackRange;
@@ -22,6 +21,10 @@ public class Boss2_attack : MonoBehaviour
     [SerializeField] float range;
     [SerializeField] Vector2 colliderRange;
     [SerializeField] LayerMask knightLayer;
+    int attack_normal;
+    int attack_fury;
+    bool isAttackFury;
+
     private void Awake()
     {
         no = 0;
@@ -31,7 +34,10 @@ public class Boss2_attack : MonoBehaviour
         attack1_counter = 0;
         skill_counter = 0;
         attackRange = boss.attackRange;
-        box = GetComponent<BoxCollider2D>();
+        box = GetComponent<CapsuleCollider2D>();
+        attack_normal = 50;
+        attack_fury = 80;
+        isAttackFury = false;
     }
     private void Update()
     {
@@ -46,10 +52,12 @@ public class Boss2_attack : MonoBehaviour
                 if (Boss2_attack.no == 3)
                 {
                     anim.SetTrigger("attack_no");
+                    isAttackFury = true;
                     Boss2_attack.no = 0;
                 }
                 else
                 {
+                    isAttackFury = false;
                     Boss2_attack.no++;
                     anim.SetTrigger("attack_normal");
                 }
@@ -98,9 +106,11 @@ public class Boss2_attack : MonoBehaviour
             if (hit[i].gameObject.CompareTag("Knight"))
             {
                 hit[i].gameObject.GetComponent<Animator>().SetTrigger("hit");
-                hit[i].GetComponent<KnightStatic>().TakeDame(-50);
+                if (isAttackFury)  hit[i].GetComponent<KnightStatic>().TakeDame(-attack_fury);
+                    else hit[i].GetComponent<KnightStatic>().TakeDame(-attack_normal);
             }
 
         }
     }
+    
 }
