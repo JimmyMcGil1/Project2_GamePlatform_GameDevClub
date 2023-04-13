@@ -46,6 +46,7 @@ public class KnightAttack : MonoBehaviour
     }
     private void Update()
     {
+        attackPower = KnightStatic.instance.attackPower;
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
           //  AttackSoundEffect.Play();
@@ -105,6 +106,12 @@ public class KnightAttack : MonoBehaviour
             {
                 hit[i].gameObject.GetComponent<Boss2_static>().TakeDame(-attackPower);
                // hit[i].gameObject.GetComponent<Animator>().SetTrigger("hurt");
+            }
+            if (hit[i].gameObject.CompareTag("Enemy"))
+            {
+                Debug.Log($"{attackPower}");
+                hit[i].gameObject.GetComponent<enemy_static>().TakeDame(-attackPower);
+                // hit[i].gameObject.GetComponent<Animator>().SetTrigger("hurt");
             }
         }
 
