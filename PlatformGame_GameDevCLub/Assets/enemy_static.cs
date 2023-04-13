@@ -33,7 +33,7 @@ public class enemy_static : MonoBehaviour
         if (currHeal + dmg <= 0) Dead();
         else
         {
-        //    anim.SetTrigger("hit");
+        anim.SetTrigger("hit");
        
             transform.Translate(new Vector2(repel * Mathf.Sign(transform.localPosition.x) * Time.deltaTime, 0f));
             currHeal += dmg;
@@ -49,7 +49,7 @@ public class enemy_static : MonoBehaviour
     }
     void Dead()
     {
-
+        anim.SetTrigger("death");
         gameObject.SetActive(false);
 
     }
