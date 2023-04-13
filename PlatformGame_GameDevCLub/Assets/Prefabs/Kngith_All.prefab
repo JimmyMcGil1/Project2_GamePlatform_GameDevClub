@@ -42,6 +42,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7812157107808068647}
     m_Modifications:
+    - target: {fileID: 7400695997143555317, guid: 3e42b1a1786da2f4b9e83ad1a4856fa0, type: 3}
+      propertyPath: m_FontData.m_LineSpacing
+      value: 68.7
+      objectReference: {fileID: 0}
     - target: {fileID: 7400695997592195688, guid: 3e42b1a1786da2f4b9e83ad1a4856fa0, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -133,6 +137,22 @@ PrefabInstance:
     - target: {fileID: 7400695997592195693, guid: 3e42b1a1786da2f4b9e83ad1a4856fa0, type: 3}
       propertyPath: m_Name
       value: UI_LevelUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7400695997592195694, guid: 3e42b1a1786da2f4b9e83ad1a4856fa0, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7400695997592195694, guid: 3e42b1a1786da2f4b9e83ad1a4856fa0, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 7400695997592195694, guid: 3e42b1a1786da2f4b9e83ad1a4856fa0, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 7400695997592195694, guid: 3e42b1a1786da2f4b9e83ad1a4856fa0, type: 3}
+      propertyPath: m_ReferencePixelsPerUnit
+      value: 1289
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e42b1a1786da2f4b9e83ad1a4856fa0, type: 3}
@@ -357,17 +377,21 @@ PrefabInstance:
       propertyPath: slider_heal
       value: 
       objectReference: {fileID: 7812157107793761869}
+    - target: {fileID: 1521748704, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2519e0e3afe729d44bb64546741eceb8, type: 3}
     - target: {fileID: 2145498199494511786, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2145498199494511786, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.8225708
+      value: 10.68
       objectReference: {fileID: 0}
     - target: {fileID: 2145498199494511786, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.7812121
+      value: -5.36
       objectReference: {fileID: 0}
     - target: {fileID: 2145498199494511786, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
       propertyPath: m_LocalPosition.z
@@ -401,12 +425,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2145498199494511787, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
+      propertyPath: flashDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145498199494511787, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145498199494511787, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
+      propertyPath: fireBulltetTimmer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2145498199494511788, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
       propertyPath: m_Name
       value: Knight
       objectReference: {fileID: 0}
+    - target: {fileID: 2145498199494511788, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145498199494511791, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
+      propertyPath: jumpingSoundEffect
+      value: 
+      objectReference: {fileID: 7812157108847141211}
+    - target: {fileID: 2334594770744787104, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8055327147879135678, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
+--- !u!82 &7812157108847141211 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1521748704, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}
+  m_PrefabInstance: {fileID: 7812157107344796603}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8190935296125708049 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2145498199494511786, guid: f4a434ff79077604eb8db90e0a3c3881, type: 3}

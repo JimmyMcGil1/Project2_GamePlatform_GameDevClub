@@ -41,7 +41,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
     [SerializeField] private AudioSource rollingSoundEffect;
 
     GameObject dust;
-
+    bool isGround;
 
     private void Awake()
     {
@@ -60,6 +60,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         oldSize = box.size;
         dust = GameObject.FindGameObjectWithTag("Dust");
         //Set the init static of knigt
+        isGround = false;
     }
     private void Start()
     {
@@ -74,8 +75,8 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         anim.SetBool("run", hor != 0 && IsGround() );
        
         //Jumping
-        if (Input.GetKeyDown(KeyCode.Space)) jump = true;
-        if (Input.GetKeyDown(KeyCode.Space) && onWall)
+        if (Input.GetKeyDown(KeyCode.Space) && IsGround()) jump = true;
+        if (Input.GetKeyDown(KeyCode.Space) && onWall && !isGround)
         {
             JumpingOnWall(powerJumpOnWall);
         }
@@ -135,7 +136,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
             rigit.AddForce(Vector2.up * powerJump, ForceMode2D.Impulse);
             jump = false;
             anim.SetTrigger("jump");
-          //  jumpingSoundEffect.Play();
+            jumpingSoundEffect.Play();
 
         }
         
@@ -152,10 +153,13 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
     }
     public bool IsGround()
     {
+        /*
         rigit.gravityScale = initialGravity;
        // Debug.Log("isground");
         RaycastHit2D hit = Physics2D.BoxCast(box.bounds.center, box.bounds.size, 0, Vector2.down, 0.01f, groundLayer);
         return hit.collider != null;
+        */
+        return isGround; 
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -168,6 +172,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         }
         else if (collision.gameObject.CompareTag("Ground"))
         {
+            isGround = true;
             dust.GetComponent<Animator>().SetTrigger("_dust");
         }
 
@@ -188,7 +193,10 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
             rigit.gravityScale = initialGravity;
             onWall = !onWall;
         }
-      
+        if (collision.gameObject.CompareTag("Ground")) 
+        {
+            isGround = false;
+        }
     }
     void JumpingOnWall(float powerJump)
     {

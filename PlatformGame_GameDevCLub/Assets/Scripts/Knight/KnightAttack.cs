@@ -12,9 +12,14 @@ public class KnightAttack : MonoBehaviour
     [SerializeField] float range;
     [SerializeField] float attackTimmer;
     [SerializeField] float attackTimmerNo2;
+
+    [SerializeField] float fireBulltetTimmer;
+    float fireBulletCounter;
+    
     [SerializeField] AudioSource AttackSoundEffect;
     float attackCoolDown;
-
+    Transform initBulletPos;
+    [SerializeField] GameObject bullet;
     Rigidbody2D rigit;
     GameObject swordEffect;
     Vector2 realRange;
@@ -22,14 +27,18 @@ public class KnightAttack : MonoBehaviour
     [SerializeField] float flashTimmer;
      float flashCounter;
     int attackPower;
+    
 
     private void Awake()
     {
+        initBulletPos = gameObject.transform.Find("Init_Bullet_Pos").transform;
+      //  bullet = gameObject.transform.Find("bullet").gameObject;
         anim = GetComponent<Animator>();
         attackCoolDown = 0f;
         box = GetComponent<BoxCollider2D>();
         swordEffect = GameObject.FindGameObjectWithTag("SwordEffect");
         flashCounter = 0;
+        fireBulletCounter = Mathf.Infinity;
     }
     private void Start()
     {
@@ -62,6 +71,17 @@ public class KnightAttack : MonoBehaviour
 
         flashCounter += Time.deltaTime;
         attackCoolDown += Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            if (fireBulletCounter > fireBulltetTimmer)
+            {
+                anim.SetTrigger("attack");
+                FireBullet();
+                fireBulletCounter = 0;
+            }    
+        }
+        fireBulletCounter += Time.deltaTime;
         realRange = colliderRange;
         realRange.x *= Mathf.Sign(transform.localScale.x);
     }
@@ -94,5 +114,9 @@ public class KnightAttack : MonoBehaviour
         Vector2 newPos = transform.position;
         newPos.x = newPos.x + flashDistance * Mathf.Sign(transform.localScale.x);
         transform.position = newPos;
+    }
+    void FireBullet()
+    {
+        Instantiate(bullet, initBulletPos.position, Quaternion.identity);
     }
 }
