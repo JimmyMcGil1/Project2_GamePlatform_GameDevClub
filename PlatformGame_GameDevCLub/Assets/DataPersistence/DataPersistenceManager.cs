@@ -45,7 +45,6 @@ public class DataPersistenceManager: MonoBehaviour
     {
         foreach (var item in dataObjects)
         {
-            Debug.Log(item);
             item.SaveData(ref gameData);
         }
         Debug.Log($"Save Current Hp = {gameData.HP}");
