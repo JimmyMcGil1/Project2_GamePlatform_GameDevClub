@@ -16,6 +16,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     public int strength;
     public int speed;
     public int canFlash;
+    public int canShot;
     GameObject UI_kngit_static;
     Slider slider_heal;
      Slider slider_exp;
@@ -28,6 +29,12 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     Animator anim;
     Rigidbody2D rigit;
     bool firstLoad;
+    public float nonHurtTimmer;
+    float nonHurtCounter;
+    bool isNonHurt;
+    [SerializeField] GameObject R;
+    [SerializeField] GameObject M1;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(this);
@@ -45,7 +52,8 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         rigit = GetComponent<Rigidbody2D>();
         UI_static_present = GameObject.FindGameObjectWithTag("UI_static_present");
         UI_LevelUp = GameObject.FindGameObjectWithTag("UI_LevelUp");
-        Debug.Log($"Star max heal {maxHeal}");
+        nonHurtCounter = 0;
+        isNonHurt = false;
     }
 
     void HealChange(int healChange)
@@ -70,7 +78,15 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         if (Input.GetKeyDown(KeyCode.X)) GainEXP(20);
         if (Input.GetKey(KeyCode.T)) UI_static_present.SetActive(true);
         else UI_static_present.SetActive(false);
+
+        if (isNonHurt)
+        {
+            StartCoroutine(Non_hurt());
+            isNonHurt = false;
+        }
         // if (Input.GetKeyDown(KeyCode.Escape)) UI_In_Level_test.instance.GamePause(); 
+        R.SetActive(canFlash == 1);
+        M1.SetActive(canShot == 1);
     }
     /// <summary>
     /// Knight nhan vao luong sat thuong = dame. Luu y dame phai be hon 0
@@ -78,13 +94,16 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     /// <param name="dame"></param>
     public void TakeDame(int dame)
     {
-        HealChange(dame + strength);
-        //  anim.SetTrigger("hit");
-        rigit.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * 4, 0), ForceMode2D.Impulse);
         if (currHeal == 0)
         {
             anim.SetTrigger("dead");
+            return;
         }
+        else if (isNonHurt) return;
+        HealChange(dame + strength);
+        //  anim.SetTrigger("hit");
+        rigit.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * 4, 0), ForceMode2D.Impulse);
+        isNonHurt = true;
     }
     /// <summary>
     /// Knight duoc hoi mot luong HP. Luu y bonusHp phai lon hon 0
@@ -110,6 +129,11 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
             canFlash = 1;
             GameManager.instance.PrintMessage("You have unlocked skill Flash. Press R to try it!");
         }
+        if (currLevel == 7)
+        {
+            canShot = 1;
+            GameManager.instance.PrintMessage("You have unlocked skill Shot. Right click to try it!");
+        }
         UI_LevelUp.SetActive(true);
     }
     /// <summary>
@@ -134,6 +158,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         speed = gameData.speed;
 
         canFlash = gameData.canFlash;
+        canShot = gameData.canShot;
         Debug.Log($"Load HP = {gameData.HP}");
         Debug.Log($"Load attack  = {gameData.attackPower}");
         Debug.Log($"Load strength = {gameData.strength}");
@@ -149,6 +174,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         gameData.attackPower = attackPower;
         gameData.strength = strength;
         gameData.canFlash = canFlash;
+        gameData.canShot = canShot;
     }
     /// <summary>
     /// Is call by event in 'dead' animation
@@ -173,5 +199,12 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         exp_text.text = $"{currEXP}/{maxEXP}";
         level_text.text = $"Lv: {currLevel}";
         firstLoad = false;
+    }
+    IEnumerator Non_hurt()
+    {
+        for (int i = 0; i <= 1; i++)
+        {
+            yield return new WaitForSeconds(nonHurtTimmer);
+        }
     }
 }   

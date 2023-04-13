@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
+    
     [SerializeField] GameObject printer;
     private void Awake()
     {

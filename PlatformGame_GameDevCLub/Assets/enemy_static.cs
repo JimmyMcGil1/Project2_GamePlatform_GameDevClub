@@ -30,11 +30,14 @@ public class enemy_static : MonoBehaviour
     public void TakeDame(int dmg)
     {
 
-        if (currHeal + dmg <= 0) Dead();
+        if (currHeal + dmg <= 0)
+        {
+            anim.SetTrigger("death");
+            return;
+        }
         else
         {
         anim.SetTrigger("hit");
-       
             transform.Translate(new Vector2(repel * Mathf.Sign(transform.localPosition.x) * Time.deltaTime, 0f));
             currHeal += dmg;
 
@@ -49,8 +52,8 @@ public class enemy_static : MonoBehaviour
     }
     void Dead()
     {
-        anim.SetTrigger("death");
-        gameObject.SetActive(false);
+        Destroy(gameObject);
+
 
     }
 

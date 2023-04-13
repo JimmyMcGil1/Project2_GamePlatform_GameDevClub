@@ -24,6 +24,7 @@ public class Print_Text : MonoBehaviour
     
      IEnumerator Typing()
     {
+        dialogueText.text = "";
         foreach (var letter in message.ToCharArray())
         {
             dialogueText.text += letter;

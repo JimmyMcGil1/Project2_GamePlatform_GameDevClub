@@ -17,6 +17,7 @@ TagManager:
   - UI_knight_static
   - Checkpoint
   - Enemy
+  - Che
   layers:
   - Default
   - TransparentFX

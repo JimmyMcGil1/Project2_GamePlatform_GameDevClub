@@ -10,6 +10,7 @@ public class UI_static_present : MonoBehaviour
     static Text speed_text;
     static Text heal_text;
     static GameObject flash;
+    static GameObject shot;
     private void Awake()
     {
         attack_text = gameObject.transform.Find("Attack").gameObject.transform.Find("attack_text").gameObject.GetComponent<Text>();
@@ -17,6 +18,7 @@ public class UI_static_present : MonoBehaviour
         speed_text = gameObject.transform.Find("Speed").gameObject.transform.Find("speed_text").gameObject.GetComponent<Text>();
         heal_text = gameObject.transform.Find("Heal").gameObject.transform.Find("heal_text").gameObject.GetComponent<Text>();
         flash = gameObject.transform.Find("Flash_Skill").gameObject;
+        shot = gameObject.transform.Find("Skill_Shot").gameObject;
     }
     private void Start()
     {
@@ -32,6 +34,8 @@ public class UI_static_present : MonoBehaviour
         strength_text.text = KnightStatic.instance.strength.ToString();
         speed_text.text = KnightStatic.instance.speed.ToString();
         flash.SetActive(KnightStatic.instance.canFlash == 1);
+        shot.SetActive(KnightStatic.instance.canShot == 1);
         heal_text.text = KnightStatic.instance.maxHeal.ToString();
     }
+   
 }

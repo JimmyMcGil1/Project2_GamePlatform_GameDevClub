@@ -7,8 +7,8 @@ public class Bullet : MonoBehaviour
     GameObject knight;
     Rigidbody2D rigit;
     BoxCollider2D box;
-    Vector2 newPos;
-    float speed ;
+    Vector2 newPos; 
+    [SerializeField]float speed ;
     Animator anim;
     int dir;
     private void Awake()
@@ -16,7 +16,6 @@ public class Bullet : MonoBehaviour
         knight = GameObject.FindGameObjectWithTag("Knight");
         rigit = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
-        speed = 40;
         anim = GetComponent<Animator>();
     }
     private void Start()
@@ -47,6 +46,10 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Boss2"))
         {
             collision.gameObject.GetComponent<Boss2_static>().TakeDame(-50);
+        }
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<enemy_static>().TakeDame(-50);
         }
         anim.SetTrigger("explode");
         speed = 0;

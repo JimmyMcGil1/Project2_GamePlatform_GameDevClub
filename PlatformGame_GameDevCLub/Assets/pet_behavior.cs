@@ -17,7 +17,6 @@ public class pet_behavior : MonoBehaviour
     {
         boss = GameObject.FindGameObjectWithTag("Boss");
         knight = GameObject.FindGameObjectWithTag("Knight");
-        Debug.Log(boss.name);
         rigit = GetComponent<Rigidbody2D>();
         veloc = rigit.velocity;
         attackCounter = 0;
