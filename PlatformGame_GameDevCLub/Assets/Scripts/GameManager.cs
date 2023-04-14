@@ -5,13 +5,15 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
-    
+    GameObject UI_In_Level;
     [SerializeField] GameObject printer;
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(this);
         else instance = this;
+        UI_In_Level = gameObject.transform.Find("UI_In_Level").gameObject;
         printer.SetActive(false);
+
     }
     private void Start()
     {
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
     }
     public void Pause()
     {
+        gameObject.SetActive(true);
         Time.timeScale = 0;
     }
     public void GameOver()
@@ -39,19 +42,40 @@ public class GameManager : MonoBehaviour
         DataPersistenceManager.instance.SaveGame();
         Application.Quit();
     }
-    public void PrintMessage(string msg)
+    public void PrintMessage(string msg, float duration)
     {
         printer.SetActive(true);
         printer.GetComponent<Print_Text>().PrintMessage(msg);
-        StartCoroutine(DestroyPrinter());
+        StartCoroutine(DestroyPrinter(duration));
        
     }
-    IEnumerator DestroyPrinter()
+    IEnumerator DestroyPrinter(float sec)
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 1; i++)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(sec);
         }
         printer.SetActive(false);
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UI_In_Level_test.instance.GamePause();
+        }
+    }
+    public void GameOverFame()
+    {
+        GameManager.instance.PrintMessage("Dead", 2);
+        StartCoroutine(StartCountDownRespawn(2));
+
+    }
+    IEnumerator StartCountDownRespawn(float sec)
+    {
+        for (int i = 0; i < 1; i++)
+        {
+            yield return new WaitForSeconds(sec);
+        }
+        RespawnScript.instance.Respawn();
     }
 }

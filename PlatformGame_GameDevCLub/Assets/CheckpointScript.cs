@@ -26,6 +26,7 @@ public class CheckpointScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Knight"))
         {
+            GameManager.instance.PrintMessage("Ah, finally there is something called Hope", 4);
             respawn.RespawnPoint = this.gameObject;
             checkpointCollider.enabled = false;
         }

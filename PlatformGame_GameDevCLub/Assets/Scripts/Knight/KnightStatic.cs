@@ -34,7 +34,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     bool isNonHurt;
     [SerializeField] GameObject R;
     [SerializeField] GameObject M1;
-
+    public bool isDead;
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(this);
@@ -54,6 +54,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         UI_LevelUp = GameObject.FindGameObjectWithTag("UI_LevelUp");
         nonHurtCounter = 0;
         isNonHurt = false;
+        isDead = false;
     }
 
     void HealChange(int healChange)
@@ -64,6 +65,11 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
             currHeal = currHeal + healChange > maxHeal ? maxHeal : currHeal + healChange;
         slider_heal.value = currHeal;
         heal_text.text = $"{currHeal}/{maxHeal}";
+        if (currHeal == 0)
+        {
+            isDead = true;
+            anim.SetTrigger("dead");
+        }
     }
     private void Start()
     {
@@ -75,6 +81,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     {
         if (maxHeal != 0 && !firstLoad) UpdateState();
         if (Input.GetKeyDown(KeyCode.F)) HealChange(10);
+        if (Input.GetKeyDown(KeyCode.G)) HealChange(-50);
         if (Input.GetKeyDown(KeyCode.X)) GainEXP(20);
         if (Input.GetKey(KeyCode.T)) UI_static_present.SetActive(true);
         else UI_static_present.SetActive(false);
@@ -94,12 +101,8 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     /// <param name="dame"></param>
     public void TakeDame(int dame)
     {
-        if (currHeal == 0)
-        {
-            anim.SetTrigger("dead");
-            return;
-        }
-        else if (isNonHurt) return;
+      
+        if (isNonHurt) return;
         HealChange(dame + strength);
         //  anim.SetTrigger("hit");
         rigit.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * 4, 0), ForceMode2D.Impulse);
@@ -127,12 +130,12 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         if (currLevel == 5)
         {
             canFlash = 1;
-            GameManager.instance.PrintMessage("You have unlocked skill Flash. Press R to try it!");
+            GameManager.instance.PrintMessage("You have unlocked skill Flash. Press R to try it!", 6);
         }
         if (currLevel == 7)
         {
             canShot = 1;
-            GameManager.instance.PrintMessage("You have unlocked skill Shot. Right click to try it!");
+            GameManager.instance.PrintMessage("You have unlocked skill Shot. Right click to try it!", 6);
         }
         UI_LevelUp.SetActive(true);
     }
@@ -181,9 +184,9 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     /// </summary>
     void Dead()
     {
-        GameManager.instance.GameOver();
-        UI_In_Level_test.instance.GamePause();
-        currEXP = 0;
+        //  GameManager.instance.GameOver();
+        GameManager.instance.GameOverFame();
+        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -207,4 +210,5 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
             yield return new WaitForSeconds(nonHurtTimmer);
         }
     }
+    
 }   

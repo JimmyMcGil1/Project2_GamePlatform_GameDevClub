@@ -1,6 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 public class UI_In_Level_test : MonoBehaviour
 {
@@ -19,7 +20,23 @@ public class UI_In_Level_test : MonoBehaviour
     public void GamePause()
     {
         gameObject.SetActive(true);
-        GameManager.instance.Pause();
+        Time.timeScale = 0;
+     //   GameManager.instance.Pause();
+    }
+    private void Start()
+    {
+        gameObject.SetActive(false);
+
     }
     
+    public void Restart()
+    {
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        KnightStatic.instance.currHeal = KnightStatic.instance.maxHeal;
+        Time.timeScale = 1;
+        RespawnScript.instance.Respawn();
+        gameObject.SetActive(false);
+    }
+   
+
 } 

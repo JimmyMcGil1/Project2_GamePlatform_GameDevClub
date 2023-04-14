@@ -76,7 +76,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
        
         //Jumping
         if (Input.GetKeyDown(KeyCode.Space) && IsGround()) jump = true;
-        if (Input.GetKeyDown(KeyCode.Space) && onWall && !isGround)
+        if (Input.GetKeyDown(KeyCode.Space) && onWall && !IsGround())
         {
             JumpingOnWall(powerJumpOnWall);
         }
@@ -182,15 +182,15 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         if (onWall)
         {
             rigit.velocity = Vector2.zero;
-            rigit.gravityScale = 0.4f;
+            rigit.gravityScale = 1f;
         }
         else return;
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
+        rigit.gravityScale = initialGravity;
         if (onWall)
         {
-            rigit.gravityScale = initialGravity;
             onWall = !onWall;
         }
         if (collision.gameObject.CompareTag("Ground")) 
