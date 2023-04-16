@@ -8,11 +8,13 @@ public class ChasePlayer : MonoBehaviour
     private GameObject player;
     public bool chase = false;
     public Transform StartingPoint;
-    
+    [SerializeField] AudioSource ChasingPlayer;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Knight");
+        ChasingPlayer.Play();
     }
 
     // Update is called once per frame

@@ -22,7 +22,7 @@ public class DataPersistenceManager: MonoBehaviour
     void Start()
     {
         _handler = new DataHandler("C:\\Users\\LENOVO\\Dropbox\\PC\\Desktop", fileName);
-        dataObjects = FindAllDataPersistenceObjects();
+        dataObjects = FindAllDataPersistenceObjects();  
         LoadGame();
     }
     public void NewGame()

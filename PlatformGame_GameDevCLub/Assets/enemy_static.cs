@@ -13,8 +13,10 @@ public class enemy_static : MonoBehaviour
     Slider heal_slider;
     Text heal_text;
     public float nonHurtTimmer;
-    float nonHurtCounter; 
-   
+    float nonHurtCounter;
+    [SerializeField] AudioSource DeathSoundEffect;
+    [SerializeField] AudioSource HitSoundEffect;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -37,12 +39,14 @@ public class enemy_static : MonoBehaviour
         {
             currHeal = 0;
             anim.SetTrigger("death");
+            DeathSoundEffect.Play();
             return;
         }
         else
         {
             if (nonHurtCounter < nonHurtTimmer) return;
              anim.SetTrigger("hit");
+            HitSoundEffect.Play();
              currHeal += dmg;
              nonHurtCounter = 0;
 

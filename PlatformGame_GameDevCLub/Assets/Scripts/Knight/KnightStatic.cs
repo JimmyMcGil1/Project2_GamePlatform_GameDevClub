@@ -33,6 +33,9 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     float nonHurtCounter;
     [SerializeField] GameObject R;
     [SerializeField] GameObject M1;
+    [SerializeField] AudioSource HitSoundEffect;
+    [SerializeField] AudioSource DeathSoundEffect;
+    [SerializeField] AudioSource LevelUpSoundEffect;
     public bool isDead;
     private void Awake()
     {
@@ -67,6 +70,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         {
             isDead = true;
             anim.SetTrigger("dead");
+            DeathSoundEffect.Play();
         }
     }
     private void Start()
@@ -99,6 +103,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         if (nonHurtCounter < nonHurtTimmer) return;
         HealChange(dame + strength);
         anim.SetTrigger("hit");
+        HitSoundEffect.Play();
         anim.SetTrigger("non_hurt");
         rigit.AddForce(Vector2.right * 6 * -Mathf.Sign(KnightMoveset.instance.faceDir.x), ForceMode2D.Impulse);
         nonHurtCounter = 0;
@@ -119,6 +124,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         level_text.text = $"Lv: {currLevel}";
         slider_exp.value = currEXP;
         anim.SetTrigger("level_up");
+        LevelUpSoundEffect.Play();
         maxHeal += Mathf.CeilToInt(maxHeal * 0.2f) > 100 ? Mathf.CeilToInt(maxHeal * 0.2f) : 100 ;
         currHeal += Mathf.CeilToInt(maxHeal * 0.2f) > 100 ? Mathf.CeilToInt(maxHeal * 0.2f) : 100;
         slider_heal.maxValue = maxHeal;

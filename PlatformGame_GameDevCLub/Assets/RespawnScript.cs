@@ -6,6 +6,7 @@ public class RespawnScript : MonoBehaviour
 {
     GameObject player;
     public GameObject RespawnPoint;
+    [SerializeField] AudioSource RespawnSoundEffect;
     public static RespawnScript instance { get; private set; }
     private void Awake()
     {
@@ -43,5 +44,6 @@ public class RespawnScript : MonoBehaviour
         KnightStatic.instance.currHeal = KnightStatic.instance.maxHeal;
         KnightStatic.instance.currEXP = 0;
         KnightMoveset.instance.GetComponent<Animator>().SetTrigger("respawn");
+        RespawnSoundEffect.Play();
     }
 }
