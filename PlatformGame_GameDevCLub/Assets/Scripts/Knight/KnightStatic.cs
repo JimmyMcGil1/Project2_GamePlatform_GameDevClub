@@ -6,17 +6,17 @@ using UnityEngine.UI;
 public class KnightStatic : MonoBehaviour, IDataPersistence
 {
 
-    public int currHeal;
-    public int currEXP;
-    public int currLevel;
+    [HideInInspector] public int currHeal;
+    [HideInInspector] public int currEXP;
+    [HideInInspector] public int currLevel;
 
-    public int maxEXP;
-    public int maxHeal = 100;
-    public int attackPower;
-    public int strength;
-    public int speed;
-    public int canFlash;
-    public int canShot;
+    [HideInInspector] public int maxEXP;
+    [HideInInspector] public int maxHeal = 100;
+    [HideInInspector] public int attackPower;
+    [HideInInspector] public int strength;
+    [HideInInspector] public int speed;
+    [HideInInspector] public int canFlash;
+    [HideInInspector] public int canShot;
     GameObject UI_kngit_static;
     Slider slider_heal;
      Slider slider_exp;
@@ -31,7 +31,6 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     bool firstLoad;
     public float nonHurtTimmer;
     float nonHurtCounter;
-    bool isNonHurt;
     [SerializeField] GameObject R;
     [SerializeField] GameObject M1;
     public bool isDead;
@@ -52,8 +51,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         rigit = GetComponent<Rigidbody2D>();
         UI_static_present = GameObject.FindGameObjectWithTag("UI_static_present");
         UI_LevelUp = GameObject.FindGameObjectWithTag("UI_LevelUp");
-        nonHurtCounter = 0;
-        isNonHurt = false;
+        nonHurtCounter = Mathf.Infinity;
         isDead = false;
     }
 
@@ -86,11 +84,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         if (Input.GetKey(KeyCode.T)) UI_static_present.SetActive(true);
         else UI_static_present.SetActive(false);
 
-        if (isNonHurt)
-        {
-            StartCoroutine(Non_hurt());
-            isNonHurt = false;
-        }
+        nonHurtCounter += Time.deltaTime;
         // if (Input.GetKeyDown(KeyCode.Escape)) UI_In_Level_test.instance.GamePause(); 
         R.SetActive(canFlash == 1);
         M1.SetActive(canShot == 1);
@@ -101,12 +95,13 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     /// <param name="dame"></param>
     public void TakeDame(int dame)
     {
-      
-        if (isNonHurt) return;
+
+        if (nonHurtCounter < nonHurtTimmer) return;
         HealChange(dame + strength);
-        //  anim.SetTrigger("hit");
-        rigit.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * 4, 0), ForceMode2D.Impulse);
-        isNonHurt = true;
+        anim.SetTrigger("hit");
+        anim.SetTrigger("non_hurt");
+        rigit.AddForce(Vector2.right * 6 * -Mathf.Sign(KnightMoveset.instance.faceDir.x), ForceMode2D.Impulse);
+        nonHurtCounter = 0;
     }
     /// <summary>
     /// Knight duoc hoi mot luong HP. Luu y bonusHp phai lon hon 0
@@ -124,7 +119,8 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         level_text.text = $"Lv: {currLevel}";
         slider_exp.value = currEXP;
         anim.SetTrigger("level_up");
-        maxHeal += Mathf.CeilToInt(maxHeal * 0.2f);
+        maxHeal += Mathf.CeilToInt(maxHeal * 0.2f) > 100 ? Mathf.CeilToInt(maxHeal * 0.2f) : 100 ;
+        currHeal += Mathf.CeilToInt(maxHeal * 0.2f) > 100 ? Mathf.CeilToInt(maxHeal * 0.2f) : 100;
         slider_heal.maxValue = maxHeal;
         heal_text.text = $"{currHeal}/{maxHeal}";
         if (currLevel == 5)
@@ -203,12 +199,6 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         level_text.text = $"Lv: {currLevel}";
         firstLoad = false;
     }
-    IEnumerator Non_hurt()
-    {
-        for (int i = 0; i <= 1; i++)
-        {
-            yield return new WaitForSeconds(nonHurtTimmer);
-        }
-    }
+    
     
 }   

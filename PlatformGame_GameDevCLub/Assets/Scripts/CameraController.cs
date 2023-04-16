@@ -16,6 +16,10 @@ public class CameraController : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Knight").transform;
     }
+    private void Start()
+    {
+        speed = player.gameObject.GetComponent<KnightStatic>().speed - 1 < 2 ? 2 : player.gameObject.GetComponent<KnightStatic>().speed - 1;
+    }
     private void LateUpdate()
     {
         float xTarget = player.position.x + xOffset;

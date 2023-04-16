@@ -18,6 +18,8 @@ TagManager:
   - Checkpoint
   - Enemy
   - Che
+  - Boss3
+  - StartPoint
   layers:
   - Default
   - TransparentFX

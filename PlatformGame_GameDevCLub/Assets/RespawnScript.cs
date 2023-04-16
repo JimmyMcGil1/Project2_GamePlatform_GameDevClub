@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class RespawnScript : MonoBehaviour
 {
-    public GameObject player;
+    GameObject player;
     public GameObject RespawnPoint;
     public static RespawnScript instance { get; private set; }
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(this);
         else instance = this;
+        player = GameObject.FindGameObjectWithTag("Knight");
+        RespawnPoint = GameObject.FindGameObjectWithTag("StartPoint");
     }
     // Start is called before the first frame update
     void Start()

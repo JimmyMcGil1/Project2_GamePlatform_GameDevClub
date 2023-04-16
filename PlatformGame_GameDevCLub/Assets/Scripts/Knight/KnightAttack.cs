@@ -120,13 +120,18 @@ public class KnightAttack : MonoBehaviour
                 hit[i].gameObject.GetComponent<Boss2_static>().TakeDame(-attackPower);
                // hit[i].gameObject.GetComponent<Animator>().SetTrigger("hurt");
             }
+            if (hit[i].gameObject.CompareTag("Boss3"))
+            {
+                hit[i].gameObject.GetComponent<Boss3_static>().TakeDame(-attackPower);
+                // hit[i].gameObject.GetComponent<Animator>().SetTrigger("hurt");
+            }
             if (hit[i].gameObject.CompareTag("Enemy"))
             {
-                Debug.Log($"{attackPower}");
                 hit[i].gameObject.GetComponent<enemy_static>().TakeDame(-attackPower);
                 // hit[i].gameObject.GetComponent<Animator>().SetTrigger("hurt");
             }
-            hit[i].GetComponent<Rigidbody2D>().AddForce(Vector2.right  * Mathf.Sign(transform.localScale.x), ForceMode2D.Impulse);
+          
+        if (!hit[i].gameObject.CompareTag("Boss"))    hit[i].GetComponent<Rigidbody2D>().AddForce(Vector2.right  * Mathf.Sign(transform.localScale.x), ForceMode2D.Impulse);
         }
 
     }

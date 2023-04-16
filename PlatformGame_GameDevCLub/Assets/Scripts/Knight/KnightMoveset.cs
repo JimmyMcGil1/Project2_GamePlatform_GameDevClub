@@ -6,9 +6,11 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
 {
     public static KnightMoveset instance { get; private set; }
     [Header("Move")]
-    float speed;
+    int speed;
     float hor;
-    Vector2 faceDir;
+
+    [HideInInspector]
+    public Vector2 faceDir;
    
     [Header("Rolling")]
     [SerializeField] float rollForce;
@@ -18,9 +20,15 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
 
     [Header("Jump")]
     public float powerJump;
+    [SerializeField] Vector2 wallCollider;
+    [SerializeField] Vector2 wallColliderPos;
+    Vector2 center;
+    
     Vector2 pos;
     bool jump;
-    bool onWall;
+    
+    [HideInInspector]
+    public bool onWall;
 
     [Header("Crouching")]
     [SerializeField] Vector2 newSize;
@@ -83,7 +91,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         anim.SetBool("wall_hang", onWall);
         
         //Rolling
-        if (Input.GetKeyDown(KeyCode.C) && IsGround())
+        if (Input.GetKeyDown(KeyCode.C))
         {
             if (rollCounter > rollTimmer)
             {
@@ -114,6 +122,11 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
             box.offset = oldOffset;
         }
         anim.SetBool("crouch", crouch && hor == 0);
+
+
+        center = box.bounds.center;
+        center.y += wallColliderPos.y;
+        center.x = (faceDir.x > 0) ? (center.x + wallColliderPos.x) : (center.x - wallColliderPos.x);
     }
     private void FixedUpdate()
     {
@@ -142,24 +155,23 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         
         if (rolling)
         {
-            rigit.AddForce(new Vector2(rollForce * 1 * faceDir.x, 0), ForceMode2D.Impulse);
+            rigit.AddForce(Vector2.right * Mathf.Sign(faceDir.x) * rollForce, ForceMode2D.Impulse);
             rolling = !rolling;
         }
-
-        if (crouch)
-        {
-        }
-        
     }
     public bool IsGround()
     {
-        /*
         rigit.gravityScale = initialGravity;
-       // Debug.Log("isground");
-        RaycastHit2D hit = Physics2D.BoxCast(box.bounds.center, box.bounds.size, 0, Vector2.down, 0.01f, groundLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(box.bounds.center, box.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
         return hit.collider != null;
-        */
-        return isGround; 
+    }
+   
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying) return;
+        Gizmos.color = Color.blue;
+        wallColliderPos.x *= Mathf.Sign(faceDir.x);
+        Gizmos.DrawWireCube(center, wallCollider );
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -170,7 +182,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
             float dir = collision.gameObject.transform.position.x - transform.position.x;
             if (faceDir.x * dir < 0) faceDir.x = -faceDir.x;
         }
-        else if (collision.gameObject.CompareTag("Ground"))
+         if (collision.gameObject.CompareTag("Ground"))
         {
             isGround = true;
             dust.GetComponent<Animator>().SetTrigger("_dust");
@@ -196,13 +208,14 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         if (collision.gameObject.CompareTag("Ground")) 
         {
             isGround = false;
+            anim.SetTrigger("fall");
         }
     }
     void JumpingOnWall(float powerJump)
     {
         Vector2 newPos;
-        newPos.x = (powerJump  ) *   Mathf.Cos(60 * Mathf.Deg2Rad) *  (-Mathf.Sign(faceDir.x));
-        newPos.y = (powerJump + 10 ) *   Mathf.Sin(60 * Mathf.Deg2Rad) ;
+        newPos.x = (powerJump  ) *   Mathf.Cos(70 * Mathf.Deg2Rad) *  (-Mathf.Sign(faceDir.x));
+        newPos.y = (powerJump + 10 ) *   Mathf.Sin(70 * Mathf.Deg2Rad) ;
         rigit.AddForce(newPos , ForceMode2D.Impulse);
         onWall = !onWall;
 
@@ -215,9 +228,11 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
     public void LoadData(GameData gameData)
     {
         transform.position = gameData.playerPos;
+        speed = gameData.speed;
     }
     public void SaveData(ref GameData gameData)
     {
         gameData.playerPos = transform.position;
+        gameData.speed = speed;
     }
 }

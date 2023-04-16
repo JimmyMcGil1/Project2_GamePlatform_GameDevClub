@@ -12,6 +12,8 @@ public class enemy_static : MonoBehaviour
     Color disColor;
     Slider heal_slider;
     Text heal_text;
+    public float nonHurtTimmer;
+    float nonHurtCounter; 
    
     private void Awake()
     {
@@ -24,6 +26,7 @@ public class enemy_static : MonoBehaviour
         currHeal = totalHeal;
         heal_slider.value = currHeal;
         heal_text.text = $"{currHeal}/{totalHeal}";
+        nonHurtCounter = Mathf.Infinity;
         
     }
     
@@ -32,14 +35,16 @@ public class enemy_static : MonoBehaviour
 
         if (currHeal + dmg <= 0)
         {
+            currHeal = 0;
             anim.SetTrigger("death");
             return;
         }
         else
         {
-        anim.SetTrigger("hit");
-            transform.Translate(new Vector2(repel * Mathf.Sign(transform.localPosition.x) * Time.deltaTime, 0f));
-            currHeal += dmg;
+            if (nonHurtCounter < nonHurtTimmer) return;
+             anim.SetTrigger("hit");
+             currHeal += dmg;
+             nonHurtCounter = 0;
 
         }
     }
@@ -49,12 +54,11 @@ public class enemy_static : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q)) TakeDame(-10);
         heal_slider.value = currHeal;
         heal_text.text = $"{currHeal}/{totalHeal}";
+        nonHurtCounter += Time.deltaTime;
     }
     void Dead()
     {
         Destroy(gameObject);
-
-
     }
 
 

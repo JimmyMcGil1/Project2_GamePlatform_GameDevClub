@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Boss1_static : MonoBehaviour
 {
     public static  Boss1_static instance { get; private set; }
+    public float nonHurtTimmer;
+    float nonHurtCounter;
     public int currHeal { get; private set; }
     [SerializeField] Text heal_text;
     [SerializeField] Slider slider_heal;
@@ -23,15 +25,20 @@ public class Boss1_static : MonoBehaviour
         anim = GetComponent<Animator>();
         rigit = GetComponent<Rigidbody2D>();
         heal_text.text = $"{currHeal}/{maxHeal}";
-
+        nonHurtCounter = Mathf.Infinity;
     }
     public void TakeDame(int dame)
     {
-        currHeal = (currHeal + dame < 0) ? 0 : currHeal + dame;
-        if (currHeal == 0) anim.SetTrigger("death");
-        else anim.SetTrigger("hurt");
-        slider_heal.value = currHeal;
-        heal_text.text = $"{currHeal}/{maxHeal}";
+        if (nonHurtCounter > nonHurtTimmer)
+        {
+            currHeal = (currHeal + dame < 0) ? 0 : currHeal + dame;
+            if (currHeal == 0) anim.SetTrigger("death");
+            else anim.SetTrigger("hurt");
+            slider_heal.value = currHeal;
+            heal_text.text = $"{currHeal}/{maxHeal}";
+            nonHurtCounter = 0;
+        }
+      
         if (currHeal < maxHeal * 0.95f)
         {
             boss1_beheviour.changeState = true;
@@ -43,5 +50,9 @@ public class Boss1_static : MonoBehaviour
     void Death()
     {
         Destroy(gameObject);
+    }
+    private void Update()
+    {
+        nonHurtCounter += Time.deltaTime;
     }
 }

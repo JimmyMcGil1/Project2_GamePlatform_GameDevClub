@@ -130,8 +130,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5c14ea5e7bf5b48b454a560fb1716c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  faceDir: {x: 0, y: 0}
   rollForce: 7
   powerJump: 20
+  wallCollider: {x: 0, y: 0}
+  wallColliderPos: {x: 0, y: 0}
+  onWall: 0
   newSize: {x: 0.6105828, y: 1.2}
   newOffset: {x: -0.1767466, y: -0.4}
   groundLayer:
@@ -182,7 +186,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 2}
+    oldSize: {x: 6.4, y: 3.2}
     newSize: {x: 0.296875, y: 0.578125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -210,10 +214,13 @@ MonoBehaviour:
   range: 0.55
   attackTimmer: 0.4
   attackTimmerNo2: 0.6
+  fireBulltetTimmer: 0
   AttackSoundEffect: {fileID: 1521748706}
   bullet: {fileID: 6791937802911341375, guid: d245d03270247e74b9a9638874ec35ee, type: 3}
   flashDistance: 0
   flashTimmer: 0
+  cheR: {fileID: 0}
+  cheM1: {fileID: 0}
 --- !u!114 &1282020033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +242,11 @@ MonoBehaviour:
   strength: 0
   speed: 0
   canFlash: 0
+  canShot: 0
+  nonHurtTimmer: 0
+  R: {fileID: 0}
+  M1: {fileID: 0}
+  isDead: 0
 --- !u!82 &1521748704
 AudioSource:
   m_ObjectHideFlags: 0
@@ -861,11 +873,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6377190579899771670, guid: c2d491d55cc5a1846868a527fd0eea7d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.031
+      value: -0.11
       objectReference: {fileID: 0}
     - target: {fileID: 6377190579899771670, guid: c2d491d55cc5a1846868a527fd0eea7d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.97
+      value: -1.56
       objectReference: {fileID: 0}
     - target: {fileID: 6377190579899771670, guid: c2d491d55cc5a1846868a527fd0eea7d, type: 3}
       propertyPath: m_LocalPosition.z

@@ -23,7 +23,7 @@ public class GameData
         attackPower = 30;
         speed = 4;
         strength = 5;
-        playerPos = Vector3.zero;
+        playerPos = new Vector3(15.0f, -20.0f, 0.0f);
         canFlash = 0;
         canShot = 0;
     }

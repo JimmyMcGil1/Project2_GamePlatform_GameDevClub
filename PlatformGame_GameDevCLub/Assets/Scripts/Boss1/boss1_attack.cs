@@ -26,8 +26,7 @@ public class boss1_attack : MonoBehaviour
         {
             if (hit[i].gameObject.CompareTag("Knight")) 
             {
-                hit[i].gameObject.GetComponent<Animator>().SetTrigger("hit");
-                hit[i].GetComponent<KnightStatic>().TakeDame(-5);
+                hit[i].GetComponent<KnightStatic>().TakeDame(-70);
             }
 
         }

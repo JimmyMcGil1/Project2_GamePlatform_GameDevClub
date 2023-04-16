@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -1003,9 +1003,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Attacks_38: -1886575703
       Attacks_27: -1711973092
       Attacks_9: -784649166
+      Attacks_6: 272933133
       Attacks_31: -2076931031
       Attacks_37: 1897686055
       Attacks_3: -1862314076
@@ -1033,13 +1033,13 @@ TextureImporter:
       Attacks_20: 1126025659
       Attacks_39: 1686273766
       Attacks_36: 2123259439
-      Attacks_12: 975364792
-      Attacks_0: 2046518869
-      Attacks_29: -2081683555
-      Attacks_6: 272933133
-      Attacks_35: -2021501116
-      Attacks_2: 469284950
       Attacks_18: -1572610158
+      Attacks_29: -2081683555
+      Attacks_0: 2046518869
+      Attacks_12: 975364792
+      Attacks_38: -1886575703
+      Attacks_2: 469284950
+      Attacks_35: -2021501116
       Attacks_21: -2132875491
       Attacks_1: 1431076090
       Attacks_8: 258491920

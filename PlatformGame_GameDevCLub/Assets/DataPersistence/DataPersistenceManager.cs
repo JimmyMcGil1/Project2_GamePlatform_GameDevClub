@@ -9,6 +9,7 @@ public class DataPersistenceManager: MonoBehaviour
     private List<IDataPersistence> dataObjects { get; set; }
     private DataHandler _handler { get; set; }
     [SerializeField] string fileName;
+    Vector3 startPoint;
     private void Awake()
     {
         if (instance != null)
@@ -16,6 +17,7 @@ public class DataPersistenceManager: MonoBehaviour
             Debug.LogError("Found more than one Data Persistence Manager in the scene");
         }
         instance = this;
+        startPoint = GameObject.FindGameObjectWithTag("StartPoint").transform.position;
     }
     void Start()
     {
@@ -26,6 +28,7 @@ public class DataPersistenceManager: MonoBehaviour
     public void NewGame()
     {
         gameData = new GameData();
+        gameData.playerPos = startPoint;
     }
     public void LoadGame()
     {

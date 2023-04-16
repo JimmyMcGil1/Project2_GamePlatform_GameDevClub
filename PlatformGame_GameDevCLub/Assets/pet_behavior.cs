@@ -10,6 +10,7 @@ public class pet_behavior : MonoBehaviour
     [SerializeField] float force;
     Rigidbody2D rigit;
     Vector2 veloc;
+    Vector2 velocAttack;
     float attackTimmer ;
     float attackCounter ;
     bool isAttack;
@@ -18,7 +19,8 @@ public class pet_behavior : MonoBehaviour
         boss = GameObject.FindGameObjectWithTag("Boss");
         knight = GameObject.FindGameObjectWithTag("Knight");
         rigit = GetComponent<Rigidbody2D>();
-        veloc = rigit.velocity;
+        veloc = Vector2.zero;
+        velocAttack = Vector2.zero;
         attackCounter = 0;
         attackTimmer = 5f;
         isAttack = false;
@@ -27,7 +29,7 @@ public class pet_behavior : MonoBehaviour
     {
         if (!isAttack)
         {
-            Vector2 newPos = boss.transform.position - transform.position + Vector3.up * 1.5f;
+            Vector2 newPos = boss.transform.position - transform.position ;
             transform.position = Vector2.SmoothDamp(transform.position, newPos, ref veloc, 1);
         }
         
@@ -43,7 +45,8 @@ public class pet_behavior : MonoBehaviour
     {
         Vector2 newPos = knight.transform.position - transform.position;
         // transform.position = Vector2.SmoothDamp(transform.position, newPos, ref veloc, 1);
-        rigit.AddForce(newPos * force, ForceMode2D.Impulse  );
+            transform.position = Vector2.SmoothDamp(transform.position, newPos, ref veloc, 3);
+
         Debug.Log("pet attack");
         isAttack = !isAttack;
     }
