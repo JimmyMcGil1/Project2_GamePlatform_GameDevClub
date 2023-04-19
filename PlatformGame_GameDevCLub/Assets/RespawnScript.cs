@@ -5,7 +5,9 @@ using UnityEngine;
 public class RespawnScript : MonoBehaviour
 {
     GameObject player;
-    public GameObject RespawnPoint;
+    [HideInInspector] public GameObject RespawnPoint;
+    GameObject BOSS; 
+    GameObject pet;
     [SerializeField] AudioSource RespawnSoundEffect;
     public static RespawnScript instance { get; private set; }
     private void Awake()
@@ -13,6 +15,7 @@ public class RespawnScript : MonoBehaviour
         if (instance != null && instance != this) Destroy(this);
         else instance = this;
         player = GameObject.FindGameObjectWithTag("Knight");
+        BOSS = GameObject.FindGameObjectWithTag("BOSS");
         RespawnPoint = GameObject.FindGameObjectWithTag("StartPoint");
     }
     // Start is called before the first frame update
@@ -39,11 +42,17 @@ public class RespawnScript : MonoBehaviour
     }
     public void Respawn()
     {
+     
+        KnightStatic.instance.isDead = false;
+        BOSS.SetActive(false);
+        pet = GameObject.FindGameObjectWithTag("Pet");
+        if (pet != null) Destroy(pet);
         GameManager.instance.PrintMessage("Shit! One more again? Can I actually dead?", 5);
         player.transform.position = RespawnPoint.transform.position;
         KnightStatic.instance.currHeal = KnightStatic.instance.maxHeal;
         KnightStatic.instance.currEXP = 0;
         KnightMoveset.instance.GetComponent<Animator>().SetTrigger("respawn");
+        
         RespawnSoundEffect.Play();
     }
 }

@@ -53,7 +53,7 @@ public class KnightAttack : MonoBehaviour
     private void Update()
     {
         attackPower = KnightStatic.instance.attackPower;
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !KnightStatic.instance.isDead)
         {
           //  AttackSoundEffect.Play();
             if (attackCoolDown > attackTimmer)
@@ -68,7 +68,7 @@ public class KnightAttack : MonoBehaviour
              attackCoolDown = 0;
             }
         }
-        if (Input.GetKeyDown(KeyCode.R) && (KnightStatic.instance.canFlash == 1))
+        if (Input.GetKeyDown(KeyCode.R) && (KnightStatic.instance.canFlash == 1) && !KnightStatic.instance.isDead)
         {
             if (flashCounter > flashTimmer) 
             {
@@ -81,7 +81,7 @@ public class KnightAttack : MonoBehaviour
         flashCounter += Time.deltaTime;
         attackCoolDown += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && KnightStatic.instance.canShot == 1)
+        if (Input.GetKeyDown(KeyCode.Mouse1) && KnightStatic.instance.canShot == 1 && !KnightStatic.instance.isDead)
         {
             if (fireBulletCounter > fireBulltetTimmer)
             {

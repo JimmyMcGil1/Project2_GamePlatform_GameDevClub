@@ -100,7 +100,7 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
     public void TakeDame(int dame)
     {
 
-        if (nonHurtCounter < nonHurtTimmer) return;
+        if (nonHurtCounter < nonHurtTimmer || isDead) return;
         HealChange(dame + strength);
         anim.SetTrigger("hit");
         HitSoundEffect.Play();
@@ -125,14 +125,15 @@ public class KnightStatic : MonoBehaviour, IDataPersistence
         slider_exp.value = currEXP;
         anim.SetTrigger("level_up");
         LevelUpSoundEffect.Play();
-        maxHeal += Mathf.CeilToInt(maxHeal * 0.2f) > 100 ? Mathf.CeilToInt(maxHeal * 0.2f) : 100 ;
-        currHeal += Mathf.CeilToInt(maxHeal * 0.2f) > 100 ? Mathf.CeilToInt(maxHeal * 0.2f) : 100;
+        int buffHealth = Mathf.CeilToInt(maxHeal * 0.2f) > 100 ? 100 : Mathf.CeilToInt(maxHeal * 0.2f);
+        maxHeal += buffHealth;
+        currHeal += buffHealth;
         slider_heal.maxValue = maxHeal;
         heal_text.text = $"{currHeal}/{maxHeal}";
         if (currLevel == 5)
         {
             canFlash = 1;
-            GameManager.instance.PrintMessage("You have unlocked skill Flash. Press R to try it!", 6);
+            GameManager.instance.PrintMessage("You have unlocked skill Flash. Press R to try it!", 4);
         }
         if (currLevel == 7)
         {

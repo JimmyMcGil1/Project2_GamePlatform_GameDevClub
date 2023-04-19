@@ -62,6 +62,8 @@ public class enemy_static : MonoBehaviour
     }
     void Dead()
     {
+        KnightStatic.instance.GainEXP(40);
+        KnightStatic.instance.GainHp(20);
         Destroy(gameObject);
     }
 

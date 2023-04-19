@@ -6,23 +6,23 @@ using UnityEngine.UI;
 public class Door_beheviour : MonoBehaviour
 {
      Image door_slider;
-    public BoxCollider2D box;
-    public Rigidbody2D rigit;
+    [HideInInspector] public BoxCollider2D box;
+    [HideInInspector] public Rigidbody2D rigit;
+
+    GameObject boss;
     Door_detach door_detack;
     private void Awake()
     {
         door_slider = gameObject.transform.Find("Door_canvas").Find("Door_slider").gameObject.GetComponent<Image>();
+        boss = GameObject.FindGameObjectWithTag("BOSS");
         box = GetComponent<BoxCollider2D>();
         rigit = GetComponent<Rigidbody2D>();
-        door_detack = gameObject.transform.Find("Door_detach").gameObject.GetComponent<Door_detach>();
-        
+        door_detack = gameObject.transform.Find("Door_Detack").gameObject.GetComponent<Door_detach>();
     }
-    private void Update()
+    private void Start()
     {
-       
+        boss.SetActive(false);
     }
-
-   
     public IEnumerator Unlock()
     {
         Debug.Log("door unlock");
@@ -33,6 +33,9 @@ public class Door_beheviour : MonoBehaviour
         }
         box.isTrigger = true;
         GameManager.instance.PrintMessage("Lucky for you to meet Dark Lord. Be elegant with him but I'm not sure he do", 7f);
+        boss.SetActive(true);
+        StartCoroutine(boss.transform.Find("Boss1").gameObject.GetComponent<boss1_beheviour>().StartRun()); 
+        StartCoroutine(boss.transform.Find("Boss1").gameObject.GetComponent<boss1_beheviour>().StartSummon()); 
     }
     public IEnumerator Lock()
     {

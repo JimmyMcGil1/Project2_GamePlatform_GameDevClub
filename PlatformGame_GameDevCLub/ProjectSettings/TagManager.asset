@@ -20,6 +20,8 @@ TagManager:
   - Che
   - Boss3
   - StartPoint
+  - BOSS
+  - Pet
   layers:
   - Default
   - TransparentFX

@@ -2,29 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Plus : KnightStatic
+public class Plus : MonoBehaviour
 {
-    public LayerMask HP;
-    public LayerMask Blood;
-    public float l;
-    
-    void plusHP()
+    [SerializeField] int bonusHp;
+    [SerializeField] int bonusExp;
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Collider2D[] HPs = Physics2D.OverlapCircleAll(transform.position, l, HP);
-        foreach(var HP in HPs)
+        if (collision.gameObject.CompareTag("Knight"))
         {
-            KnightStatic.instance.GainHp(10);
-            Destroy(HP.gameObject);
-        } 
-    }
-
-    void plusEXP()
-    {
-        Collider2D[] Bloods = Physics2D.OverlapCircleAll(transform.position, l, Blood);
-        foreach(var Blood in Bloods)
-        {
-            KnightStatic.instance.GainEXP(5);
-            Destroy(Blood.gameObject);
-        } 
+            if (bonusHp > 0) KnightStatic.instance.GainHp(bonusHp);
+            else KnightStatic.instance.GainEXP(bonusExp);
+            Destroy(gameObject);
+        }
     }
 }   

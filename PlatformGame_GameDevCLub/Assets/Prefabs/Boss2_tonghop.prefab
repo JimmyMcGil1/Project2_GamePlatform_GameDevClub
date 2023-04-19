@@ -611,7 +611,7 @@ MonoBehaviour:
   heal_text: {fileID: 5877200739170460242}
   slider_heal: {fileID: 5877200738168386347}
   maxHeal: 2000
-  nonHurtTimmer: 0.5
+  nonHurtTimmer: 1
 --- !u!70 &1890728835
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

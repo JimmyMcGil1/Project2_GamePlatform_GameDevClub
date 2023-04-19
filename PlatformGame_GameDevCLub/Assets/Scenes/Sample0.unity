@@ -3393,14 +3393,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5877200737480838095, guid: dd714a5fd6bb8364989036db9e1b7834, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5877200737480838095, guid: dd714a5fd6bb8364989036db9e1b7834, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5877200737642560364, guid: dd714a5fd6bb8364989036db9e1b7834, type: 3}
       propertyPath: m_Camera
       value: 
@@ -3453,10 +3445,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5877200739109455992, guid: dd714a5fd6bb8364989036db9e1b7834, type: 3}
-      propertyPath: nonHurtTimmer
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd714a5fd6bb8364989036db9e1b7834, type: 3}
 --- !u!1001 &6776228217015810676
@@ -3466,14 +3454,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6776228215752712149, guid: c28b0388e7603d04396070e06c234958, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6776228215752712149, guid: c28b0388e7603d04396070e06c234958, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6776228216556194675, guid: c28b0388e7603d04396070e06c234958, type: 3}
       propertyPath: m_Name
       value: Boss3_Tonghop

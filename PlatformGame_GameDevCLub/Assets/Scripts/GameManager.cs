@@ -76,6 +76,9 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(sec);
         }
+
         RespawnScript.instance.Respawn();
+        
+        
     }
 }

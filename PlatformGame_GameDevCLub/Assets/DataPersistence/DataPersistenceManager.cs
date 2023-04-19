@@ -21,7 +21,7 @@ public class DataPersistenceManager: MonoBehaviour
     }
     void Start()
     {
-        _handler = new DataHandler("C:\\Users\\LENOVO\\Dropbox\\PC\\Desktop", fileName);
+        _handler = new DataHandler(Application.persistentDataPath, fileName);
         dataObjects = FindAllDataPersistenceObjects();  
         LoadGame();
     }

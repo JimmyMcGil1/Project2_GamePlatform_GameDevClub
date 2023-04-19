@@ -12,11 +12,10 @@ GameObject:
   - component: {fileID: 693689427845882638}
   - component: {fileID: 693689427845882637}
   - component: {fileID: 733470456246143663}
-  - component: {fileID: 3773623082237656321}
   - component: {fileID: 222555316270387602}
   m_Layer: 0
   m_Name: pet
-  m_TagString: Untagged
+  m_TagString: Pet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,10 +28,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693689427845882624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.24552476, y: 0.1859045, z: 0.31582466}
+  m_LocalPosition: {x: 38.15487, y: -47.24612, z: -0.31582466}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2844155012755448931}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 721201910, guid: 52c18e17ca9788e4fb983c2897699ca1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -120,29 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f096d1c8fb464ac40845991834b1d04e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boss: {fileID: 6412220119343351669, guid: 4fb93df0d8b990647a4a46047b1a40d2, type: 3}
   speed: 1
   force: 2
---- !u!50 &3773623082237656321
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 693689427845882624}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  attackTimmer: 3
 --- !u!61 &222555316270387602
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -169,3 +150,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.66117346, y: 0.96220946}
   m_EdgeRadius: 0
+--- !u!1 &7404141858893782704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2844155012755448931}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2844155012755448931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7404141858893782704}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.66358566, y: -0.6031532, z: -0.07323736}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 693689427845882639}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

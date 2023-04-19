@@ -19,6 +19,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
     float rollCounter;
 
     [Header("Jump")]
+    [SerializeField] float powerJumpOnWall;
     public float powerJump;
     [SerializeField] Vector2 wallCollider;
     [SerializeField] Vector2 wallColliderPos;
@@ -38,12 +39,11 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
     Vector2 oldOffset;
     
     Rigidbody2D rigit;
-    BoxCollider2D box;
+    [HideInInspector] public BoxCollider2D box;
     Animator anim;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask wallLayer;
     float initialGravity;
-    [SerializeField] float powerJumpOnWall;
     [SerializeField] float smoothScale;
     [SerializeField] private AudioSource jumpingSoundEffect;
     [SerializeField] private AudioSource rollingSoundEffect;
@@ -131,7 +131,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
     private void FixedUpdate()
     {
         //Moving
-        if (hor != 0)
+        if (hor != 0 && !KnightStatic.instance.isDead)
         {
             pos = rigit.position;
             pos.x += hor * speed * Time.deltaTime;
@@ -143,7 +143,7 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         //////////
 
         //Jumping
-        if (jump && IsGround())
+        if (jump && IsGround() && !KnightStatic.instance.isDead)
         {
             
             rigit.AddForce(Vector2.up * powerJump, ForceMode2D.Impulse);
@@ -189,12 +189,13 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         }
 
     }
+   
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (onWall)
         {
             rigit.velocity = Vector2.zero;
-            rigit.gravityScale = 1f;
+            rigit.gravityScale = 0.6f;
         }
         else return;
     }
@@ -203,19 +204,20 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         rigit.gravityScale = initialGravity;
         if (onWall)
         {
+            Debug.Log("fall");
             onWall = !onWall;
+            anim.SetTrigger("fall");
         }
         if (collision.gameObject.CompareTag("Ground")) 
         {
             isGround = false;
-            anim.SetTrigger("fall");
         }
     }
     void JumpingOnWall(float powerJump)
     {
         Vector2 newPos;
         newPos.x = (powerJump  ) *   Mathf.Cos(70 * Mathf.Deg2Rad) *  (-Mathf.Sign(faceDir.x));
-        newPos.y = (powerJump + 10 ) *   Mathf.Sin(70 * Mathf.Deg2Rad) ;
+        newPos.y = (powerJump + 8 ) *   Mathf.Sin(70 * Mathf.Deg2Rad) ;
         rigit.AddForce(newPos , ForceMode2D.Impulse);
         onWall = !onWall;
 

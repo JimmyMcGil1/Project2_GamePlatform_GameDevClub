@@ -18,7 +18,7 @@ public class Boss2_behavior : MonoBehaviour
     }
     private void Update()
     {
-        if ((knightPos.position.x - transform.position.x) * transform.localScale.x < 0)
+        if ((knightPos.position.x - transform.position.x) * transform.localScale.x > 0)
         {
             Vector2 faceDir = transform.localScale;
             faceDir.x *= -1;

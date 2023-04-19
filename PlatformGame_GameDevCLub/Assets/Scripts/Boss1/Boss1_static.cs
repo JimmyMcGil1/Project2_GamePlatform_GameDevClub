@@ -14,6 +14,7 @@ public class Boss1_static : MonoBehaviour
     public int maxHeal;
     Animator anim;
     Rigidbody2D rigit;
+    bool isSummon;
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(this);
@@ -26,6 +27,7 @@ public class Boss1_static : MonoBehaviour
         rigit = GetComponent<Rigidbody2D>();
         heal_text.text = $"{currHeal}/{maxHeal}";
         nonHurtCounter = Mathf.Infinity;
+        isSummon = false;
     }
     public void TakeDame(int dame)
     {
@@ -38,8 +40,7 @@ public class Boss1_static : MonoBehaviour
             heal_text.text = $"{currHeal}/{maxHeal}";
             nonHurtCounter = 0;
         }
-      
-        if (currHeal < maxHeal * 0.95f)
+        if (currHeal <= maxHeal * 0.6f)
         {
             boss1_beheviour.changeState = true;
             anim.SetBool("run_state_1", false);
