@@ -24,10 +24,15 @@ public class Boss2_attack : MonoBehaviour
     int attack_normal;
     int attack_fury;
     bool isAttackFury;
+    AudioSource audi;
+    [SerializeField] AudioClip attack1Clip;
+    [SerializeField] AudioClip attack2Clip;
+    [SerializeField] AudioClip speellClip;
 
     private void Awake()
     {
         no = 0;
+        audi.GetComponent<AudioSource>();
         knightPos = GameObject.FindGameObjectWithTag("Knight").transform;
         boss = GetComponent<Boss2_behavior>();
         anim = GetComponent<Animator>();
@@ -51,6 +56,8 @@ public class Boss2_attack : MonoBehaviour
             {
                 if (Boss2_attack.no == 3)
                 {
+                    audi.clip = attack1Clip;
+                    audi.Play();
                     anim.SetTrigger("attack_no");
                     isAttackFury = true;
                     Boss2_attack.no = 0;
@@ -59,6 +66,8 @@ public class Boss2_attack : MonoBehaviour
                 {
                     isAttackFury = false;
                     Boss2_attack.no++;
+                    audi.clip = attack2Clip;
+                    audi.Play();
                     anim.SetTrigger("attack_normal");
                 }
                 attack1_counter = 0;
@@ -69,6 +78,8 @@ public class Boss2_attack : MonoBehaviour
             if (Boss2_static.fury == true && skill_counter > skill_timmer)
             {
                 anim.SetTrigger("cast_spell");
+                audi.clip = speellClip;
+                audi.Play();
                 Vector2 initPost = knightPos.position;
                 initPost.y += 2f;
                 cloneSpell  = Instantiate(spell, initPost, Quaternion.identity);

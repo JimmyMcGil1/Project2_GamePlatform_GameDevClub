@@ -23,6 +23,7 @@ public class Boss3_attack : MonoBehaviour
     int attack_fury;
     bool isAttackFury;
     
+    
 
     CapsuleCollider2D cap;
     [SerializeField] float suctionForce;
@@ -30,6 +31,10 @@ public class Boss3_attack : MonoBehaviour
 
     [SerializeField] float suckSkillTimmer;
     float suckSkillCounter;
+
+    AudioSource audi;
+    [SerializeField] AudioClip attackClip;
+    [SerializeField] AudioClip suckClip;
     private void Awake()
     {
         no = 0;
@@ -44,6 +49,7 @@ public class Boss3_attack : MonoBehaviour
         isAttackFury = false;
         cap = gameObject.GetComponent<CapsuleCollider2D>();
         suckSkillCounter = Mathf.Infinity;
+        audi = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -58,6 +64,8 @@ public class Boss3_attack : MonoBehaviour
             
                 
                     isAttackFury = false;
+                audi.clip = attackClip;
+                audi.PlayOneShot(attackClip);
                     anim.SetTrigger("attack_normal");
                 attack1_counter = 0;
             }
@@ -68,6 +76,7 @@ public class Boss3_attack : MonoBehaviour
         if (suckSkillCounter > suckSkillTimmer)
         {
             StartCoroutine(StartSuck(timeSuck));
+            audi.PlayOneShot(suckClip);
             anim.SetBool("suck", true);
             suckSkillCounter = 0;
         }

@@ -14,7 +14,7 @@ public class DataPersistenceManager: MonoBehaviour
     {
         if (instance != null && instance != this) Destroy(this);
         else instance = this;
-        //fileName = "new_data.json";
+        fileName = "hello_co_em_nha.json";
         GameObject _startPoint = GameObject.FindGameObjectWithTag("StartPoint");
        if (_startPoint != null) startPoint = _startPoint.transform.position;
     }

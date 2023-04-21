@@ -10,6 +10,8 @@ public class boss1_run : StateMachineBehaviour
     [SerializeField] float attackRange;
     float attack1_timmer;
     float attack1_counter;
+    AudioSource audi;
+    [SerializeField] AudioClip attack1Clip;
 
     Rigidbody2D rigit;
     boss1_beheviour boss;

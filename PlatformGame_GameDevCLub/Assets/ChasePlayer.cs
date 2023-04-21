@@ -47,7 +47,7 @@ public class ChasePlayer : MonoBehaviour
     {
         if (collision.gameObject.tag == "Knight")
         {
-            KnightStatic.instance.TakeDame(-10);
+            KnightStatic.instance.TakeDame(-Mathf.RoundToInt(KnightStatic.instance.maxHeal * 0.2f));
         }
     }
 }

@@ -45,15 +45,29 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Boss2"))
         {
-            collision.gameObject.GetComponent<Boss2_static>().TakeDame(-50);
+            collision.gameObject.GetComponent<Boss2_static>().TakeDame(-100);
+        }
+        if (collision.gameObject.CompareTag("Boss3"))
+        {
+            collision.gameObject.GetComponent<Boss3_static>().TakeDame(-100);
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<enemy_static>().TakeDame(-50);
+            collision.gameObject.GetComponent<enemy_static>().TakeDame(-100);
         }
         anim.SetTrigger("explode");
         speed = 0;
         StartCoroutine(HoldDestroy());
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Boss"))
+        {
+            collision.gameObject.GetComponent<Boss1_static>().TakeDame(-100);
+            anim.SetTrigger("explode");
+            speed = 0;
+            StartCoroutine(HoldDestroy());
+        }
     }
     IEnumerator HoldDestroy()
     {

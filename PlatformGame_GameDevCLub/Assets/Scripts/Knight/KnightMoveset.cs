@@ -96,13 +96,12 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
             if (rollCounter > rollTimmer)
             {
                 rolling = true;
-                Crouching();
                 anim.SetTrigger("roll");
+                //StartCoroutine(InCrouching(3f));
                 rollCounter = 0;
                 rollingSoundEffect.Play();
             }
-            box.size = oldSize;
-            box.offset = oldOffset;
+           
 
         }
         rollCounter += Time.deltaTime;
@@ -237,4 +236,5 @@ public class KnightMoveset : MonoBehaviour, IDataPersistence
         gameData.playerPos = transform.position;
         gameData.speed = speed;
     }
+    
 }

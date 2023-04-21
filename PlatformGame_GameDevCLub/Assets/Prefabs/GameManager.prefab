@@ -252,7 +252,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8227016700639644628, guid: 6bb924d6ea6585048b0eee3a352b247d, type: 3}
       propertyPath: fileName
-      value: 
+      value: guruguru.json
       objectReference: {fileID: 0}
     - target: {fileID: 8227016700639644629, guid: 6bb924d6ea6585048b0eee3a352b247d, type: 3}
       propertyPath: m_Name

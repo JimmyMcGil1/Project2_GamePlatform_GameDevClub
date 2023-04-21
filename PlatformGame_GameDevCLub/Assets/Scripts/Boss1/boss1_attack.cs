@@ -9,9 +9,12 @@ public class boss1_attack : MonoBehaviour
     [SerializeField] LayerMask knightLayer;
     Vector2 realRange;
     BoxCollider2D box;
+    AudioSource audi;
+    [SerializeField] AudioClip attack1Clip;
+    [SerializeField] AudioClip attack2Clip;
     private void Awake()
     {
-        box = GetComponent<BoxCollider2D>();        
+        box = GetComponent<BoxCollider2D>();
     }
     private void Update()
     {
@@ -20,7 +23,7 @@ public class boss1_attack : MonoBehaviour
     }
     public void Attack()
     {
-       
+        audi.PlayOneShot(attack1Clip);  
         Collider2D[] hit = Physics2D.OverlapCircleAll((Vector2)box.bounds.center + realRange, range, knightLayer);
         for (int i = 0; i < hit.Length; i++)
         {

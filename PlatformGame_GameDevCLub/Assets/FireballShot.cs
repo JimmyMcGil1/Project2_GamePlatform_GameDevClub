@@ -34,7 +34,7 @@ public class FireballShot : MonoBehaviour
         if (other.gameObject.CompareTag("Knight"))
         {
             Destroy(gameObject);
-            other.gameObject.GetComponent<KnightStatic>().TakeDame(-20);
+            other.gameObject.GetComponent<KnightStatic>().TakeDame(-Mathf.RoundToInt(KnightStatic.instance.maxHeal * 0.1f));
         }
     }
 }

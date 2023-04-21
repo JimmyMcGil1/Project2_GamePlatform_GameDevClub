@@ -364,7 +364,7 @@ AnimatorStateMachine:
     m_Position: {x: 640, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -9168044710058552181}
-    m_Position: {x: 0, y: 20, z: 0}
+    m_Position: {x: -50, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -906931395995485421}
     m_Position: {x: 330, y: 0, z: 0}
@@ -423,6 +423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   attackRange: 2
+  attack1Clip: {fileID: 0}
   amplitude: 2
 --- !u!1101 &-504878062418783470
 AnimatorStateTransition:

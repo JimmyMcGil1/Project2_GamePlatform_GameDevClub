@@ -180,8 +180,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireball: {fileID: 2246704328710219916, guid: ef1060a53563bb646bc4facab0e17a34, type: 3}
   fireballPos: {fileID: 7683267195973094115}
-  spawnRate: 10
-  realDistance: 5
+  spawnRate: 2.5
+  realDistance: 8
   fireballSoundEffect: {fileID: 7683267196848533189}
 --- !u!82 &7683267196848533189
 AudioSource:

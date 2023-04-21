@@ -42,6 +42,8 @@ public class Boss2_static : MonoBehaviour
     }
     void Death()
     {
+        GameObject endPoint = GameObject.FindGameObjectWithTag("EndPoint").gameObject;
+        endPoint.GetComponent<BoxCollider2D>().enabled = true;
         Destroy(gameObject);
     }
     private void Update()
