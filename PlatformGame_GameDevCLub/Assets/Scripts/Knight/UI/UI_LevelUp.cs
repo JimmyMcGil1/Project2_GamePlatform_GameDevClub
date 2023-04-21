@@ -21,7 +21,7 @@ public class UI_LevelUp : MonoBehaviour
     {
         bonusAttack = Mathf.CeilToInt(KnightStatic.instance.attackPower * 0.5f);
         bonusStrength = Mathf.CeilToInt(KnightStatic.instance.strength * 0.5f);
-        bonusSpeed = Mathf.CeilToInt(KnightStatic.instance.speed * 0.1f);
+        bonusSpeed = Mathf.CeilToInt(KnightStatic.instance.speed * 0.1f) > 1 ? 1 : Mathf.CeilToInt(KnightStatic.instance.speed * 0.1f);
 
         gainAttack.text = $"+{bonusAttack}";
         gainStrength.text = $"+{bonusStrength}";

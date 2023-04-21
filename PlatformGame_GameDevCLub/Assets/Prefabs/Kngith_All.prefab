@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 7812157107808068647}
   m_Layer: 0
   m_Name: Kngith_All
-  m_TagString: Untagged
+  m_TagString: KnightAll
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

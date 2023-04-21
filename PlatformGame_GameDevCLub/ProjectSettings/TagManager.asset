@@ -22,6 +22,8 @@ TagManager:
   - StartPoint
   - BOSS
   - Pet
+  - KnightAll
+  - Door
   layers:
   - Default
   - TransparentFX

@@ -15,6 +15,7 @@ public class Boss1_static : MonoBehaviour
     Animator anim;
     Rigidbody2D rigit;
     bool isSummon;
+    bool isDead;
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(this);
@@ -28,6 +29,7 @@ public class Boss1_static : MonoBehaviour
         heal_text.text = $"{currHeal}/{maxHeal}";
         nonHurtCounter = Mathf.Infinity;
         isSummon = false;
+        isDead = false;
     }
     public void TakeDame(int dame)
     {
@@ -50,6 +52,19 @@ public class Boss1_static : MonoBehaviour
     }
     void Death()
     {
+        GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
+        
+        GameObject[] pets = GameObject.FindGameObjectsWithTag("Pet");
+        foreach (var _pet in pets)
+        {
+            Destroy(_pet);
+        }
+        foreach (var _door in doors)
+        {
+            Debug.Log("boss die, unlock door");
+           _door.GetComponent<Door_beheviour>().BossDie();
+            _door.gameObject.transform.Find("Door_Detack").gameObject.SetActive(false);
+        }
         Destroy(gameObject);
     }
     private void Update()

@@ -13,6 +13,7 @@ public class GameData
     public int speed;
     public int canFlash;
     public int canShot;
+    public int loadNewScene;
     public Vector3 playerPos;
     public GameData()
     {
@@ -26,5 +27,6 @@ public class GameData
         playerPos = new Vector3(15.0f, -20.0f, 0.0f);
         canFlash = 0;
         canShot = 0;
+        loadNewScene = 0;
     }
 }

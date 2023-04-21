@@ -21,7 +21,8 @@ public class DataPersistenceManager: MonoBehaviour
     }
     void Start()
     {
-        _handler = new DataHandler(Application.persistentDataPath, fileName);
+        _handler = new DataHandler("C:\\Users\\LENOVO\\Dropbox\\PC\\Desktop", fileName);
+        //_handler = new DataHandler(Application.persistentDataPath, fileName);
         dataObjects = FindAllDataPersistenceObjects();  
         LoadGame();
     }
@@ -37,6 +38,12 @@ public class DataPersistenceManager: MonoBehaviour
         {
             Debug.Log("No data was found from json. Initialzing data to defaults");
             NewGame();
+        }
+        if (gameData.loadNewScene == 1)
+        {
+            Debug.Log("Load new scene");
+            gameData.playerPos = startPoint;
+            gameData.loadNewScene = 0;
         }
         foreach (var item in dataObjects) 
         {

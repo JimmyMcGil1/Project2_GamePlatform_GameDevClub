@@ -421,9 +421,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae42dab157d7bd043a7bad92d26b44e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 2
   attackRange: 2
-  amplitude: 0.5
+  amplitude: 2
 --- !u!1101 &-504878062418783470
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -635,7 +635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   attackRange: 2
-  amplitude: 0.5
+  amplitude: 2
 --- !u!1101 &2728441079786934245
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

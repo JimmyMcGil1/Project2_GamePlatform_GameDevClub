@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
         else instance = this;
         UI_In_Level = gameObject.transform.Find("UI_In_Level").gameObject;
         printer.SetActive(false);
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("GameController");
+     // if (objs.Length > 1) Destroy(gameObject);
+     //   DontDestroyOnLoad(gameObject);
 
     }
     private void Start()
