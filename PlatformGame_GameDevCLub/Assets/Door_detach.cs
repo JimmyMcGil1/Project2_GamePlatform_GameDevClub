@@ -14,12 +14,11 @@ public class Door_detach : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Knight")) {
-            if (KnightStatic.instance.currLevel >= 5 && !door.bossIsLive)
+            if (KnightStatic.instance.currLevel >= 5)
             {
                 Debug.Log("knight hit door");
                 StartCoroutine(door.Unlock());
-                box.enabled = false;
-                StartCoroutine(StartLock(countDownToLock));
+                StartCoroutine(StartLock(2.5f));
             }
            
         }
@@ -32,6 +31,5 @@ public class Door_detach : MonoBehaviour
             yield return new WaitForSeconds(sec);
         }
         StartCoroutine(door.Lock());
-       box.enabled = true;
     }
 }

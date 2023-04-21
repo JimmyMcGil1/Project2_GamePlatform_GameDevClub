@@ -15,6 +15,7 @@ public class GameData
     public int canShot;
     public int loadNewScene;
     public Vector3 playerPos;
+    public int currentMap;
     public GameData()
     {
         maxHp = 100;
@@ -28,5 +29,6 @@ public class GameData
         canFlash = 0;
         canShot = 0;
         loadNewScene = 0;
+        currentMap = 1;
     }
 }

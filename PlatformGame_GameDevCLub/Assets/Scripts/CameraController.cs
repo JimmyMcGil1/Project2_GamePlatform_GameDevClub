@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour
     }
     private void Start()
     {
-        speed = player.gameObject.GetComponent<KnightStatic>().speed - 1 < 2 ? 2 : player.gameObject.GetComponent<KnightStatic>().speed - 1;
+        speed = player.gameObject.GetComponent<KnightStatic>().speed - 5 < 2 ? 2 : player.gameObject.GetComponent<KnightStatic>().speed - 5;
     }
     private void LateUpdate()
     {

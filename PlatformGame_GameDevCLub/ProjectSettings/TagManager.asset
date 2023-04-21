@@ -24,6 +24,8 @@ TagManager:
   - Pet
   - KnightAll
   - Door
+  - EndPoint
+  - EndGamePoint
   layers:
   - Default
   - TransparentFX

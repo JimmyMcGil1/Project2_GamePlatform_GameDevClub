@@ -132,19 +132,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   faceDir: {x: 0, y: 0}
   rollForce: 7
+  powerJumpOnWall: 15
   powerJump: 20
   wallCollider: {x: 0, y: 0}
   wallColliderPos: {x: 0, y: 0}
   onWall: 0
   newSize: {x: 0.6105828, y: 1.2}
   newOffset: {x: -0.1767466, y: -0.4}
+  box: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 2147483647
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
-  powerJumpOnWall: 15
   smoothScale: 0.05
   jumpingSoundEffect: {fileID: 1521748708}
   rollingSoundEffect: {fileID: 1521748707}
@@ -246,6 +247,9 @@ MonoBehaviour:
   nonHurtTimmer: 0
   R: {fileID: 0}
   M1: {fileID: 0}
+  HitSoundEffect: {fileID: 0}
+  DeathSoundEffect: {fileID: 0}
+  LevelUpSoundEffect: {fileID: 0}
   isDead: 0
 --- !u!82 &1521748704
 AudioSource:
@@ -751,7 +755,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8147915787607065129}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.93, y: -0.07, z: -0.062422197}
+  m_LocalPosition: {x: 1.88, y: -0.07, z: -0.062422197}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

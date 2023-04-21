@@ -5,9 +5,32 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    public void StartGame()
+    private void Awake()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1); 
+        
+    }
+    public void NewGame()
+    {
+       // DataPersistenceManager.instance.fileName = $"data{Random.Range(0, 10000)}.json";
+        SceneManager.LoadScene("Map1");
+    }
+    public void Continue()
+    {
+        GameManager.instance.StartGame();
+        switch (DataPersistenceManager.instance.gameData.currentMap)
+        {
+            case 1:
+                SceneManager.LoadScene("Map1");
+                break;
+            case 2:
+                SceneManager.LoadScene("Map2");
+                break;
+            case 3: 
+                SceneManager.LoadScene("Map3");
+                break;
+            default:
+                break;
+        }
     }
     public void Quit()
     {

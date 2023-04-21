@@ -17,10 +17,19 @@ public class Boss3_attack : MonoBehaviour
     [SerializeField] float range;
     [SerializeField] Vector2 colliderRange;
     [SerializeField] LayerMask knightLayer;
+    [SerializeField] Vector2 suckPos;
+    [SerializeField] Vector2 suckRange;
     int attack_normal;
     int attack_fury;
     bool isAttackFury;
+    
 
+    CapsuleCollider2D cap;
+    [SerializeField] float suctionForce;
+    [SerializeField] int timeSuck;
+
+    [SerializeField] float suckSkillTimmer;
+    float suckSkillCounter;
     private void Awake()
     {
         no = 0;
@@ -33,6 +42,8 @@ public class Boss3_attack : MonoBehaviour
         attack_normal = 50;
         attack_fury = 80;
         isAttackFury = false;
+        cap = gameObject.GetComponent<CapsuleCollider2D>();
+        suckSkillCounter = Mathf.Infinity;
     }
     private void Update()
     {
@@ -53,6 +64,16 @@ public class Boss3_attack : MonoBehaviour
         }
       
         attack1_counter += Time.deltaTime;
+
+        if (suckSkillCounter > suckSkillTimmer)
+        {
+            StartCoroutine(StartSuck(timeSuck));
+            anim.SetBool("suck", true);
+            suckSkillCounter = 0;
+        }
+        suckSkillCounter += Time.deltaTime;
+
+      
     }
     IEnumerator HoldDestroy(GameObject _gameObject)
     {
@@ -67,6 +88,10 @@ public class Boss3_attack : MonoBehaviour
         if (!Application.isPlaying) return;
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere((Vector2)box.bounds.center + realRange, range);
+
+        Vector2 realSuckPos = suckPos;
+        realSuckPos.x = Mathf.Sign(transform.localScale.x) < 0 ? realSuckPos.x * -1 : realSuckPos.x;
+        Gizmos.DrawWireCube(cap.bounds.center + (Vector3)realSuckPos, suckRange);
     }
     public void Attack()
     {
@@ -82,4 +107,28 @@ public class Boss3_attack : MonoBehaviour
 
         }
     }
+    IEnumerator StartSuck(int sec)
+    {
+        for (int i = 0; i < sec; i++)
+        {
+            for (int j = 0; j < 40; j++)
+            {
+                SuckSkill();
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+        anim.SetBool("suck", false);
+    }
+    void SuckSkill()
+    {
+        Vector2 direction = transform.position - knightPos.transform.position;
+        float distance = direction.magnitude;
+
+        if (distance < suckRange.x)
+        {
+            float force = suctionForce * (1 - distance / suckRange.x);
+            knightPos.GetComponent<Rigidbody2D>().AddForce(direction.normalized * force);
+        }
+    }
+   
 }

@@ -37,6 +37,10 @@ public class UI_In_Level_test : MonoBehaviour
         RespawnScript.instance.Respawn();
         gameObject.SetActive(false);
     }
-   
+    public void Exit()
+    {
+        DataPersistenceManager.instance.SaveGame();
+        Application.Quit();
+    }
 
 } 

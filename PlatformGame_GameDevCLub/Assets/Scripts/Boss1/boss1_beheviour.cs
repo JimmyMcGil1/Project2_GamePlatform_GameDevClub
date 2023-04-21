@@ -21,7 +21,7 @@ public class boss1_beheviour : MonoBehaviour
     
     public IEnumerator StartRun()
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             yield return new WaitForSeconds(1);
         }

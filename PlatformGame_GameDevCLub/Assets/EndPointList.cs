@@ -16,19 +16,12 @@ public class EndPointList : MonoBehaviour
     }
     public void LoadNextScene(int scene)
     {
-        SceneManager.LoadScene($"Map{scene+1}");
-        switch (scene)
-        {
-            case 1:
-                DataPersistenceManager.instance.gameData.loadNewScene = 1;
-                DataPersistenceManager.instance.SaveGame();
-                break;
-            case 2:
-                DataPersistenceManager.instance.gameData.loadNewScene = 1;
-                DataPersistenceManager.instance.SaveGame();
-                break;
-            default: Debug.Log("Cannot load scene");
-                break;
-        }
+       if (scene < 3) SceneManager.LoadScene($"Map{scene+1}");
+       else SceneManager.LoadScene($"Map3");
+
+        DataPersistenceManager.instance.gameData.loadNewScene = 1;
+        if (scene == 1) DataPersistenceManager.instance.gameData.currentMap = 2;
+        else DataPersistenceManager.instance.gameData.currentMap = 3;
+        DataPersistenceManager.instance.SaveGame();
     }
 }

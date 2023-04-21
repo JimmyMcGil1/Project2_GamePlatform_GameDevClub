@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class EndPointScript : MonoBehaviour
 {
-    [SerializeField] int currLevel; 
-    
+    [SerializeField] int currLevel;
+    private void Awake()
+    {
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Knight"))
         {
-            GameManager.instance.PrintMessage("Finaly a nightmare is over. What is waiting for my next?", 4f);
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            GameManager.instance.PrintMessage("Finaly a nightmare is over. What is waiting for me next?", 4f);
             KnightMoveset.instance.GetComponent<Animator>().SetTrigger("level_up");
             StartCoroutine(CountDownLoad(5));
         }

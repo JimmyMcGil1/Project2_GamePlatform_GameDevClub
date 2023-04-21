@@ -8,28 +8,28 @@ public class DataPersistenceManager: MonoBehaviour
     public GameData gameData;
     private List<IDataPersistence> dataObjects { get; set; }
     private DataHandler _handler { get; set; }
-    [SerializeField] string fileName;
+    public string fileName;
     Vector3 startPoint;
     private void Awake()
     {
-        if (instance != null)
-        {
-            Debug.LogError("Found more than one Data Persistence Manager in the scene");
-        }
-        instance = this;
-        startPoint = GameObject.FindGameObjectWithTag("StartPoint").transform.position;
+        if (instance != null && instance != this) Destroy(this);
+        else instance = this;
+        //fileName = "new_data.json";
+        GameObject _startPoint = GameObject.FindGameObjectWithTag("StartPoint");
+       if (_startPoint != null) startPoint = _startPoint.transform.position;
     }
     void Start()
     {
-        _handler = new DataHandler("C:\\Users\\LENOVO\\Dropbox\\PC\\Desktop", fileName);
-        //_handler = new DataHandler(Application.persistentDataPath, fileName);
+        //_handler = new DataHandler("C:\\Users\\LENOVO\\Dropbox\\PC\\Desktop", fileName);
+        Debug.Log(fileName);
+        _handler = new DataHandler(Application.persistentDataPath, fileName);
         dataObjects = FindAllDataPersistenceObjects();  
         LoadGame();
     }
     public void NewGame()
     {
         gameData = new GameData();
-        gameData.playerPos = startPoint;
+       if (startPoint != Vector3.zero) gameData.playerPos = startPoint;
     }
     public void LoadGame()
     {

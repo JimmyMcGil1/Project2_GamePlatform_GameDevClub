@@ -143,8 +143,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6776228216212970845}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 72.06191, y: -6.064152, z: 0.77341574}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalPosition: {x: 77.41, y: -5.93, z: 0.77341574}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6776228216556194684}
@@ -248,8 +248,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.042978924, y: -0.3080086}
-  m_Size: {x: 0.5044607, y: 1.521606}
+  m_Offset: {x: 0.097480774, y: -0.44426727}
+  m_Size: {x: 0.61346436, y: 2.360962}
   m_Direction: 0
 --- !u!50 &6776228216212970842
 Rigidbody2D:
@@ -291,6 +291,11 @@ MonoBehaviour:
   knightLayer:
     serializedVersion: 2
     m_Bits: 2048
+  suckPos: {x: 13, y: 0}
+  suckRange: {x: 12.5, y: 4.5}
+  suctionForce: 30
+  timeSuck: 4
+  suckSkillTimmer: 6
 --- !u!114 &6776228216212970821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +323,7 @@ GameObject:
   - component: {fileID: 6776228216556194684}
   m_Layer: 0
   m_Name: Boss3_Tonghop
-  m_TagString: Untagged
+  m_TagString: BOSS
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -672,7 +677,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1019, y: -292}
+  m_AnchoredPosition: {x: 1012, y: -374}
   m_SizeDelta: {x: 350.41, y: 66.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6776228217699352273
